@@ -1,0 +1,5 @@
+These threads are standalone tasks that are (mostly) intended to run in the background.
+You should use the .start() method on their instances to start a new thread and run their stuff in the background.
+For long-running stuff, do that in MainService, for the most part.
+
+As long as you follow the template, these should automatically stop whenever cleanup is called.

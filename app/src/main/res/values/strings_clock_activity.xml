@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="title_activity_clock">ClockActivity</string>
+
+    <string name="default_unset_date">Day, Mon. 00, 0000</string>
+    <string name="default_unset_time">12:00</string>
+    <string name="osa_default_text">MessageNet Systems Omni</string>
+
+</resources>

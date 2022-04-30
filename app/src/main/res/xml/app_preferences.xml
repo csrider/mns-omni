@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+
+    <PreferenceCategory android:title="Network Settings">
+
+        <EditTextPreference android:title="WiFi SSID"
+            android:key="@string/spKeyName_wifiSSID"
+            android:inputType="text" />
+
+        <ListPreference android:title="WiFi Security Type"
+            android:key="@string/spKeyName_wifiSecurityType"
+            android:entries="@array/wifiSecurityTypes"
+            android:entryValues="@array/wifiSecurityTypes" />
+
+        <EditTextPreference android:title="WiFi Password"
+            android:key="@string/spKeyName_wifiPassword"
+            android:inputType="text" />
+
+        <ListPreference android:title="IP Address Method"
+            android:key="@string/spKeyName_ipAddressMethod"
+            android:entries="@array/ipAddressMethods"
+            android:entryValues="@array/ipAddressMethods" />
+
+        <EditTextPreference android:title="This Device's Address (IPv4)"
+            android:key="@string/spKeyName_thisDeviceAddrIPv4"
+            android:inputType="phone"
+            android:digits="0123456789."
+            android:enabled="true" />
+
+        <EditTextPreference android:title="Network Gateway (only required for static-IP configuration)"
+            android:key="@string/spKeyName_gatewayIPv4"
+            android:inputType="phone"
+            android:digits="0123456789."
+            android:enabled="true" />
+
+        <EditTextPreference android:title="DNS Server 1 (only required for static-IP configuration)"
+            android:key="@string/spKeyName_dnsServer1IPv4"
+            android:inputType="phone"
+            android:digits="0123456789."
+            android:enabled="true" />
+
+        <EditTextPreference android:title="DNS Server 2 (only required for static-IP configuration)"
+            android:key="@string/spKeyName_dnsServer2IPv4"
+            android:inputType="phone"
+            android:digits="0123456789."
+            android:enabled="true" />
+
+        <EditTextPreference android:title="Multicast Address"
+            android:key="@string/spKeyName_multicastAddrIPv4"
+            android:inputType="phone"
+            android:digits="0123456789."
+            android:enabled="true"
+            android:defaultValue="239.0.0.0" />
+
+    </PreferenceCategory>
+
+
+
+    <PreferenceCategory android:title="Ecosystem Settings">
+
+        <ListPreference android:title="Platform To Use"
+            android:key="@string/spKeyName_ecosystemPlatformSelection"
+            android:entries="@array/ecosystemPlatform"
+            android:entryValues="@array/ecosystemPlatform_values" />
+
+    </PreferenceCategory>
+
+
+
+    <PreferenceCategory android:title="MessageNet Connections &amp; Server Settings">
+
+        <EditTextPreference android:title="MessageNet Server Address (IPv4)"
+            android:key="@string/spKeyName_serverAddrIPv4"
+            android:inputType="phone"
+            android:digits="0123456789." />
+
+        <EditTextPreference android:title="MessageNet Device ID (DEV-ONLY!)"
+            android:key="@string/spKeyName_thisDeviceID"
+            android:inputType="text"
+            android:enabled="false"
+            android:defaultValue="AVIDIA TEST TECLAST 1F        " />
+
+        <EditTextPreference android:title="Hardware Device Record Number"
+            android:key="@string/spKeyName_thisDeviceRecno"
+            android:inputType="number"
+            android:enabled="false"
+            android:defaultValue="0" />
+
+    </PreferenceCategory>
+
+
+
+    <PreferenceCategory android:title="Locality Settings">
+
+        <ListPreference android:title="Timezone"
+            android:key="@string/spKeyName_timezone"
+            android:entries="@array/timezones"
+            android:entryValues="@array/timezones_alias" />
+
+        <EditTextPreference android:title="NTP Server or Pool"
+            android:key="@string/spKeyName_ntpURL"
+            android:inputType="textUri" />
+
+    </PreferenceCategory>
+
+
+
+    <PreferenceCategory android:title="SIP &amp; Telephony Settings">
+
+        <EditTextPreference android:title="SIP Port"
+            android:key="@string/spKeyName_sipPort"
+            android:inputType="number" />
+
+        <EditTextPreference android:title="SIP Username / Extension"
+            android:key="@string/spKeyName_sipUsername"
+            android:inputType="number" />
+
+        <EditTextPreference android:title="SIP Password"
+            android:key="@string/spKeyName_sipPassword"
+            android:inputType="number" />
+
+        <EditTextPreference android:title="SIP Registration Interval (in seconds)"
+            android:key="@string/spKeyName_sipRegistrationInterval"
+            android:inputType="number" />
+
+    </PreferenceCategory>
+
+
+
+    <PreferenceCategory android:title="Appliance Information &amp; Settings">
+
+        <EditTextPreference android:title="Tablet MAC Address (for the WiFi interface)"
+            android:key="@string/spKeyName_applianceMacAddressWifi"
+            android:inputType="text"
+            android:digits="0123456789abcdef:"
+            android:enabled="false" />
+
+        <EditTextPreference android:title="Tablet MAC Address (for the wired interface)"
+            android:key="@string/spKeyName_applianceMacAddressWired"
+            android:inputType="text"
+            android:digits="0123456789abcdef:"
+            android:enabled="false" />
+
+        <EditTextPreference android:title="Tablet MAC Address (for the active interface)"
+            android:key="@string/spKeyName_applianceMacAddressActive"
+            android:inputType="text"
+            android:digits="0123456789abcdef:" />
+
+        <EditTextPreference android:title="Server TFTP Configuration Filename   (generated from active interface's MAC Address or manually defined here)"
+            android:key="@string/spKeyName_tftpConfigFilename"
+            android:inputType="text" />
+
+        <ListPreference android:title="Operation Mode"
+            android:key="@string/spKeyName_operationMode"
+            android:entries="@array/operationModes"
+            android:entryValues="@array/operationModes_values" />
+
+        <!-- Value defined in hardware definition for "Volume Mixer" field -->
+        <EditTextPreference android:title="Volume Default [Range 0-100]   (server-defined or manually defined here - note: may be overridden by message gain)"
+            android:key="@string/spKeyName_volumeDefault"
+            android:inputType="number" />
+
+        <!-- Value defined in hardware definition for "Volume Mic" field -->
+        <EditTextPreference android:title="Microphone Volume [Range 0-100]   (server-defined or manually defined here)"
+            android:key="@string/spKeyName_volumeMicrophone"
+            android:inputType="number" />
+
+        <EditTextPreference android:title="Scrolling Message Initial Repeats"
+            android:key="@string/spKeyName_initialRepeats_scrollingMsg"
+            android:inputType="number"
+            android:defaultValue="1" />
+
+        <EditTextPreference android:title="Tablet Battery Capacity (actual, estimated, or manually defined)"
+            android:key="@string/spKeyName_batteryCapacity_tablet"
+            android:summary="@string/spSummary_batteryCapacity_tablet"
+            android:inputType="numberDecimal"
+            android:digits="0123456789" />
+
+        <EditTextPreference android:title="Flasher Light Controller MAC Address"
+            android:key="@string/spKeyName_flasherMacAddress"
+            android:inputType="text"
+            android:digits="0123456789ABCDEF:"
+            android:defaultValue="44:A6:E5:" />
+
+        <EditTextPreference android:title="License Inactivation Date-Time (MM/DD/YYYY HH:MM:SS AP)"
+            android:key="@string/spKeyName_inactivationDateTime"
+            android:inputType="text"
+            android:digits="0123456789AMP-: "
+            android:defaultValue="12/31/9999 11:59:59 PM" />
+
+        <EditTextPreference android:title="Serial Number"
+            android:key="@string/spKeyName_serialNumber"
+            android:inputType="text"
+            android:enabled="false" />
+
+    </PreferenceCategory>
+
+
+</PreferenceScreen>

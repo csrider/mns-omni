@@ -1,0 +1,554 @@
+package com.messagenetsystems.evolution2.activities;
+
+/* DeliveryActivity
+ * Provides message delivery.
+ *
+ * Requires standardized OmniMessage object (no matter if source is MNS Banner, API, etc.).
+ * That OmniMessage object should be available via static DeliveryService resource, referenced by static UUID there.
+ * For now, we're avoiding serializable/parcelable tactics for efficiency and code maintainability.
+ *
+ * Message-reference Notes:
+ *  OmniMessage resource:           DeliveryService.omniMessagesForDelivery
+ *  OmniMessage UUID to deliver:    DeliveryService.omniMessageUuidDelivery_loading
+ *  How to get OmniMessage:         OmniMessage omniMessageToDeliver = DeliveryService.omniMessagesForDelivery.getOmniMessage(DeliveryService.omniMessageUuidDelivery_loading);
+ *
+ * NOTE: Defaults should already be included in the OmniMessage object, so no need to init them here?
+ *
+ * How it works:
+ *  1) Activity is started when the message controller needs it to deliver a text message.
+ *      (message data is passed in to this via the intent that starts the activity)
+ *  2) Class initializes directly with OmniMessage data from the intent upon onCreate invocation.
+ *  3) Once loaded, delivery can begin (animate, scroll, TTS, lights flash, etc.)
+ *
+ * Revisions:
+ *  2020.12.22      Chris Rider     Copied from DeliverScrollingMsgActivity and modified into a blank template useful for creating other delivery activities.
+ *
+ */
+
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
+import android.content.res.Resources;
+import android.os.Bundle;
+import android.os.Handler;
+import android.os.Process;
+import android.support.constraint.ConstraintLayout;
+import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
+import android.view.View;
+
+import com.bosphere.filelogger.FL;
+import com.messagenetsystems.evolution2.Constants;
+import com.messagenetsystems.evolution2.OmniApplication;
+import com.messagenetsystems.evolution2.R;
+import com.messagenetsystems.evolution2.models.BannerMessage;
+import com.messagenetsystems.evolution2.models.FlasherLights;
+import com.messagenetsystems.evolution2.models.OmniMessage;
+import com.messagenetsystems.evolution2.models.OmniMessages;
+import com.messagenetsystems.evolution2.services.DeliveryService;
+import com.messagenetsystems.evolution2.services.FlasherLightService;
+import com.messagenetsystems.evolution2.services.MainService;
+import com.messagenetsystems.evolution2.services.TextToSpeechServicer;
+import com.messagenetsystems.evolution2.utilities.SharedPrefsUtils;
+import com.messagenetsystems.evolution2.utilities.SystemUtils;
+import com.messagenetsystems.evolution2.utilities.ThreadUtils;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.Date;
+
+
+public class _blankDeliveryTemplate extends AppCompatActivity {
+    private final String TAG = this.getClass().getSimpleName();
+
+    // Constants...
+    private static final String PKG_NAMESPACE = "com.messagenetsystems.evolution2.activities";
+    private static final String ACTIVITY_NAME = _blankDeliveryTemplate.class.getSimpleName();
+    public static final String INTENT_ACTION_CMD_FINISH = PKG_NAMESPACE + "." + ACTIVITY_NAME + ".doFinish";
+    public static final String INTENT_EXTRA_KEYNAME_OMNIMESSAGE = PKG_NAMESPACE + ".bundleKeyName.OmniMessage";
+
+    // Logging stuff...
+    private final int LOG_SEVERITY_V = 1;
+    private final int LOG_SEVERITY_D = 2;
+    private final int LOG_SEVERITY_I = 3;
+    private final int LOG_SEVERITY_W = 4;
+    private final int LOG_SEVERITY_E = 5;
+    private int logMethod = Constants.LOG_METHOD_LOGCAT;
+
+    // Local stuff...
+    private OmniApplication omniApplication;
+    private SystemUtils systemUtils;
+    private SharedPrefsUtils sharedPrefsUtils;
+
+    private CommandBroadcastReceiver commandBroadcastReceiver;
+    private IntentFilter commandBroadcastReceiverIntentFilterFinish;
+
+    private View mContentView;
+    private ConstraintLayout fullscreen_content;
+
+    public static volatile Date activityLastBecameVisible;
+
+    private OmniMessage omniMessageToDeliver;
+    private boolean doTextToSpeech;
+
+
+    /*============================================================================================*/
+    /* Activity Methods */
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        final String TAGG = "onCreate: ";
+        logV(TAGG + "Invoked.");
+
+        // Initialize some local stuff that's needed right away or before other stuff below
+        try {
+            this.omniApplication = ((OmniApplication) getApplicationContext());
+        } catch (Exception e) {
+            Log.e(TAG, "Exception caught instantiating " + TAG + ": " + e.getMessage());
+            finish();
+            return;
+        }
+        this.systemUtils = new SystemUtils(getApplicationContext(), logMethod);
+        this.sharedPrefsUtils = new SharedPrefsUtils(getApplicationContext(), logMethod);
+
+        // Initialize broadcast receivers and associated intent filters
+        this.commandBroadcastReceiver = new CommandBroadcastReceiver();
+        this.commandBroadcastReceiverIntentFilterFinish = new IntentFilter(INTENT_ACTION_CMD_FINISH);
+
+        // Configure screen elements, and then render everything as configured
+        this.systemUtils.configScreen_hideActionBar(this);
+        this.systemUtils.configScreen_keepScreenOn(this);
+        setContentView(R.layout.activity_deliver_scrolling_msg);
+
+        // Initialize more local stuff
+        this.mContentView = findViewById(R.id.fullscreen_deliver_scrolling);
+        this.fullscreen_content = (ConstraintLayout) mContentView;
+
+        // Initialize message stuff
+        try {
+            this.omniMessageToDeliver = MainService.omniMessages_deliverable.getOmniMessage(DeliveryService.omniMessageUuidDelivery_loading, OmniMessages.GET_OMNIMESSAGE_AS_COPY);
+        } catch (Exception e) {
+            logE(TAGG + "Exception caught retrieving OmniMessage from DeliveryService: " + e.getMessage());
+            //TODO: some kind of error message to scroll? or just close the activity?
+            finish();
+            return;
+        }
+        if (this.omniMessageToDeliver == null) {
+            // This sometimes happens when multiple messages are deliverable...
+            // Not yet sure why (1/16/2020), but this is probably a good check to have anyway.
+            logW(TAGG + "OmniMessage is null! Aborting.");
+            finish();
+            return;
+        }
+
+        // Initialize any potential text-to-speech, so it has time to load up and be ready to start on demand (e.g. as scrolling begins)
+        doTextToSpeech = determineTextToSpeech();
+        if (doTextToSpeech && omniApplication.getIsTextToSpeechAvailable()) {
+            TextToSpeechServicer.prepareMessageTTS(getApplicationContext(), this.omniMessageToDeliver.getMessageUUID());
+        }
+
+        // Set screen elements with message data
+        try {
+            logV(TAGG + "Preparing to deliver " + this.omniMessageToDeliver.getMessageUUID().toString() + " (\"" + this.omniMessageToDeliver.getMsgText() + "\").");
+
+            //TODO: initializations on screen?
+        } catch (Exception e) {
+            logE(TAGG + "Exception caught (accessing OmniMessage from DeliveryService?): " + e.getMessage());
+            //TODO: some kind of error message to scroll? or just close the activity?
+            finish();
+            return;
+        }
+
+        try {
+            //TODO: Customize priority?
+            //logE(TAGG+"Thread priority before: "+android.os.Process.getThreadPriority(Process.myTid()));
+            Thread.currentThread().setPriority(Thread.MAX_PRIORITY);
+            Process.setThreadPriority(-20);  //this is the highest possible priority that can be set
+            //logE(TAGG+"Thread priority after: "+android.os.Process.getThreadPriority(Process.myTid()));
+        } catch (Throwable throwable) {
+            logW(TAGG+"Exception caught adjusting UI thread priority: "+throwable.getMessage());
+        }
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        final String TAGG = "onStart: ";
+        logV(TAGG + "Invoked.");
+        // Do the stuff here
+    }
+
+    @Override
+    protected void onPostCreate(Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+        final String TAGG = "onPostCreate: ";
+        logV(TAGG + "Invoked.");
+
+        // DEV-NOTE:
+        // It is advised not to use this for most things (except for framework stuff),
+        // and to use onResume, instead.
+
+        // Load screen elements (these need to be done here --so after the screen completely renders)
+        systemUtils.configScreen_hideNavigationBar(findViewById(R.id.fullscreen_deliver_scrolling));
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        //updates the activity before onResume
+
+        //Bundle extras = intent.getExtras();
+        //threadScrollingMessageCycler.end();
+        //this.recreate();
+
+        final String TAGG = "onNewIntent (task ID: " + getTaskId() + "): ";
+        Log.d(TAG, TAGG + "Invoked.");
+    }
+
+    @Override
+    public void onResume() {
+        overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+        super.onResume();
+        final String TAGG = "onResume: ";
+        logV(TAGG + "Invoked.");
+
+        // Update our timestamp for when the activity became visible.
+        // (this may be used by cycling routines to ensure clock stays visible at least some amount of time between messages)
+        activityLastBecameVisible = new Date();
+
+        // Register appropriate receivers
+        registerReceiver(this.commandBroadcastReceiver, commandBroadcastReceiverIntentFilterFinish);
+
+        // Begin delivery things
+        //doMsgTypeEffect();
+        //doScrollingAnimation();
+    }
+
+    @Override
+    public void onPause() {
+        overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+        final String TAGG = "onPause: ";
+        logV(TAGG + "Invoked.");
+
+        // Set delivery flags
+        DeliveryService.omniMessageUuidDelivery_currently = null;
+
+        // Unregister appropriate receivers
+        unregisterReceiver(this.commandBroadcastReceiver);
+
+        super.onPause();
+    }
+
+    @Override
+    protected void onStop() {
+        // The system retains the current state of this.
+
+        final String TAGG = "onStop: ";
+        logV(TAGG + "Invoked.");
+
+        // Try to force finish (and thus onDestroy to fire and clean stuff up)
+        try {
+            finish();
+        } catch (Exception e) {
+            logE(TAGG + "Exception caught trying to finish activity: " + e.getMessage());
+        }
+
+        super.onStop();
+    }
+
+    @Override
+    protected void onDestroy() {
+        final String TAGG = "onDestroy: ";
+        logV(TAGG + "Invoked.");
+        // NOTE: You should probably never assume that this will always be invoked!
+        // But trying to force it (e.g. onStop finish call)
+
+        try {
+            DeliveryService.omniMessageUuidDelivery_currently = null;
+            DeliveryService.omniMessageUuidDelivery_loading = null;
+
+            if (this.systemUtils != null) {
+                this.systemUtils.cleanup();
+                this.systemUtils = null;
+            }
+            this.omniApplication = null;
+            this.sharedPrefsUtils = null;
+
+            this.commandBroadcastReceiver = null;
+            this.commandBroadcastReceiverIntentFilterFinish = null;
+
+            this.mContentView = null;
+            this.fullscreen_content = null;
+
+
+        } catch (Exception e) {
+            logE(TAGG + "Exception caught: " + e.getMessage());
+        }
+
+        super.onDestroy();
+    }
+
+
+    /*============================================================================================*/
+    /* Utility Methods */
+
+    private boolean determineTextToSpeech() {
+        final String TAGG = "determineTextToSpeech: ";
+        boolean shouldDoTTS = false;
+
+        // How to determine whether to TTS or not...
+        //  - For MessageNet Connections v1, if there's an audio group
+        //  - For API, ?
+        if(omniApplication.getEcosystem()==OmniApplication.ECOSYSTEM_MESSAGENET_CONNECTIONS_V1) {
+            Resources r = getApplicationContext().getResources();
+            BannerMessage bannerMessage = this.omniMessageToDeliver.getBannerMessage();
+            if (bannerMessage == null) {
+                logW(TAGG + "BannerMessage is not available. Cannot determine text-to-speech. Defaulting to no text-to-speech.");
+                shouldDoTTS = false;
+            } else {
+                if (bannerMessage.getDbb_pa_delivery_mode().equals(r.getString(R.string.PA_DELIVERY_MODE_TEXTTOSPEECH))
+                        /* && TODO: migrate doesMessageSpecifyThisDeviceInAudioGroup() method */) {
+                    shouldDoTTS = true;
+                /*
+                } else if (bannerMessage.getDbb_pa_delivery_mode().equals(r.getString(R.string.PA_DELIVERY_MODE_UNAVAILABLE))
+                        && //TODO: migrate doesMessageSpecifyThisDeviceInAudioGroup() method ) {
+                    logV(TAGG+"The dbb_pa_delivery_mode is unavailable/blank (\" \"), defaulting to do text-to-speech.");
+                    shouldDoTTS = true;
+                } else if (bannerMessage.getDbb_pa_delivery_mode().equals(r.getString(R.string.PA_DELIVERY_MODE_NOTSELECTED))
+                        && //TODO: migrate doesMessageSpecifyThisDeviceInAudioGroup() method) {
+                    logV(TAGG+"The dbb_pa_delivery_mode was not selected in message definition, defaulting to do text-to-speech.");
+                    shouldDoTTS = true;
+                */
+                } else if (bannerMessage.getDbb_pa_delivery_mode().equals(r.getString(R.string.PA_DELIVERY_MODE_RECORDANDPLAY))) {
+                    shouldDoTTS = false;
+                } else if (bannerMessage.getDbb_pa_delivery_mode().equals(r.getString(R.string.PA_DELIVERY_MODE_SPEAKLIVE))) {
+                    shouldDoTTS = false;
+                } else {
+                    // Maybe the BannerMessage object wasn't constructed? Fall back to raw JSON...
+                    try {
+                        JSONObject messageAsJSON = this.omniMessageToDeliver.getMessageJSONObject();
+                        if (messageAsJSON.has(r.getString(R.string.BANNMSGFIELDNAME_JSON_PADELIVERYMODE))) {
+                            if (messageAsJSON.getString(r.getString(R.string.BANNMSGFIELDNAME_JSON_PADELIVERYMODE)).equals(r.getString(R.string.PA_DELIVERY_MODE_TEXTTOSPEECH))
+                                /* TODO && BannerMessages.doesMessageSpecifyThisDeviceInAudioGroup(new BannerMessage(getApplicationContext(), messageAsJSON)) */) {
+                                shouldDoTTS = true;
+                            /*    TODO migrate doesMessageSpecifyThisDeviceInAudioGroup() method
+                            } else if (messageAsJSON.getString(r.getString(R.string.BANNMSGFIELDNAME_JSON_PADELIVERYMODE)).equals(r.getString(R.string.PA_DELIVERY_MODE_UNAVAILABLE))
+                                    && BannerMessages.doesMessageSpecifyThisDeviceInAudioGroup(new BannerMessage(getApplicationContext(), messageAsJSON))) {
+                                Log.v(TAG, TAGG+"The dbb_pa_delivery_mode is unavailable/blank (\" \"), defaulting to do text-to-speech.");
+                                this.shouldDoTTS = true;
+                            } else if (messageAsJSON.getString(r.getString(R.string.BANNMSGFIELDNAME_JSON_PADELIVERYMODE)).equals(r.getString(R.string.PA_DELIVERY_MODE_NOTSELECTED))
+                                    && BannerMessages.doesMessageSpecifyThisDeviceInAudioGroup(new BannerMessage(getApplicationContext(), messageAsJSON))) {
+                                Log.v(TAG, TAGG+"The dbb_pa_delivery_mode was not selected in message definition, defaulting to do text-to-speech.");
+                                this.shouldDoTTS = true;
+                            */
+                            } else if (messageAsJSON.getString(r.getString(R.string.BANNMSGFIELDNAME_JSON_PADELIVERYMODE)).equals(r.getString(R.string.PA_DELIVERY_MODE_RECORDANDPLAY))) {
+                                shouldDoTTS = false;
+                            } else if (messageAsJSON.getString(r.getString(R.string.BANNMSGFIELDNAME_JSON_PADELIVERYMODE)).equals(r.getString(R.string.PA_DELIVERY_MODE_SPEAKLIVE))) {
+                                shouldDoTTS = false;
+                            } else {
+                                shouldDoTTS = false;
+                            }
+                        } else {
+                            logW(TAGG + "Message's JSON object does not contain \"" + R.string.BANNMSGFIELDNAME_JSON_PADELIVERYMODE + "\". Defaulting to no text-to-speech.");
+                            shouldDoTTS = false;
+                        }
+                    } catch (JSONException je) {
+                        logE(TAGG + "Exception caught parsing data for determining text-to-speech. Defaulting to no text-to-speech.");
+                        shouldDoTTS = false;
+                    }
+                }
+            }
+        } else if(omniApplication.getEcosystem()==OmniApplication.ECOSYSTEM_MESSAGENET_CONNECTIONS_V2) {
+            //TODO
+        } else if(omniApplication.getEcosystem()==OmniApplication.ECOSYSTEM_STANDARD_API) {
+            //TODO
+        } else {
+            logW(TAGG + "Unable to determine ecosystem. Defaulting to no text-to-speech.");
+            shouldDoTTS = false;
+        }
+
+        logV(TAGG+"Text-to-speech should be set to '"+String.valueOf(shouldDoTTS)+"'.");
+
+        return shouldDoTTS;
+    }
+
+
+    /*============================================================================================*/
+    /* Message Methods */
+
+    /** Call this to flush any changes to the local OmniMessage back to the DeliveryService.omniMessagesForDelivery list. */
+    private void saveOmniMessage() {
+        final String TAGG = "saveOmniMessage: ";
+
+        try {
+            //MainService.omniMessages_deliverable.updateOmniMessage(this.omniMessageToDeliver);
+            MainService.omniMessages_deliverable.updateOmniMessage(this.omniMessageToDeliver);
+
+            // Verify
+            //if (MainService.omniMessages_deliverable.equals(this.omniMessageToDeliver)) {
+            if (MainService.omniMessages_deliverable.equals(this.omniMessageToDeliver)) {
+                logV(TAGG+"Main deliverable message updated to be equal to this activity's message.");
+            } else {
+                logW(TAGG+"Main deliverable message does not equal this activity's message after invoking updateOmniMessage (it didn't update successfully).");
+            }
+        } catch (Exception e) {
+            logE(TAGG+"Exception caught: "+e.getMessage());
+        }
+    }
+
+
+    /** Considering how long the scroll will take, setup and execute a delayed light command to fire after some time.
+     * This may be used to clear the message's light before it actually ends, to execute next message's light command, etc.
+     * @param lightCmd Which light command to execute before the animation ends
+     * @param animDuration How long (in milliseconds) the animation will take
+     * @param msBeforeAnimationEndToExecuteCmd How many ms before animation ends to execute the specified light command
+     * @param doForce (undeveloped yet)
+     * @return Whether the delayed command was successfully initiated
+     */
+    private boolean setupPreAnimationEndLightCommand(final byte lightCmd, int animDuration, int msBeforeAnimationEndToExecuteCmd, boolean doForce) {
+        final String TAGG = "setupDelayedLightCommand: ";
+
+        if (true) return false; //DISABLE FOR NOW TO PREVENT LIGHT COMMAND MISSES   -2020.07.01
+
+        boolean ret = false;
+
+        try {
+            int msDelayToExecuteLightCmd;
+
+            // As long as the specified milliseconds would actually elapse before the end of the animation,
+            // and as long as it's a positive value, proceed... Else, we'd be executing the command after
+            // the message is done scrolling, or before it even begins (which would not make sense).
+            if (msBeforeAnimationEndToExecuteCmd < animDuration
+                    && msBeforeAnimationEndToExecuteCmd > 0) {
+
+                // Our first delivery scrolls twice, so in that case, we need to double the calculated execution delay,
+                // otherwise we'd be ending the light prematurely on the very first scroll.
+                if (omniMessageToDeliver.getMsgTextScrollsDone() <= 1)
+                    msDelayToExecuteLightCmd = (animDuration * 2) - msBeforeAnimationEndToExecuteCmd;
+                else
+                    msDelayToExecuteLightCmd = animDuration - msBeforeAnimationEndToExecuteCmd;
+
+                // If there's only one message, we don't need to execute any additional light commands,
+                // as we just keep the message's light mode until it stops delivering (or other messages queue up).
+                if (MainService.omniMessages_deliverable.size() == 1) {
+                    //no need to do anything, unless our doForce flag is true
+                    if (!doForce) {
+                        msDelayToExecuteLightCmd = 0;
+                    }
+                }
+
+                // If we have a valid delay value, setup a Handler to execute the light command on that delay.
+                if (msDelayToExecuteLightCmd > 0) {
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            try {
+                                FlasherLights.broadcastLightCommand(getApplicationContext(), lightCmd, Long.MAX_VALUE, null);
+                            } catch (Exception e) {
+                                logE(TAGG + "Exception caught setting scheduled light command clear: " + e.getMessage());
+                            }
+                        }
+                    }, msDelayToExecuteLightCmd);
+                    ret = true;
+                }
+            } else {
+                logW(TAGG+"Specified value ("+msBeforeAnimationEndToExecuteCmd+") must be between 0 and "+animDuration+". Aborting");
+            }
+        } catch (Exception e) {
+            logE(TAGG + "Exception caught: " + e.getMessage());
+        }
+
+        logV(TAGG+"Returning: "+Boolean.toString(ret));
+        return ret;
+    }
+
+
+    /*============================================================================================*/
+    /* Subclasses */
+
+    private class CommandBroadcastReceiver extends BroadcastReceiver {
+        private final String TAGG = CommandBroadcastReceiver.class.getSimpleName() + ": ";
+        
+        public CommandBroadcastReceiver() {
+        }
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            final String TAGGG = "onReceive: ";
+            
+            if (intent.getAction() == null) {
+                logW(TAGG+TAGGG+"Intent action is null. Don't know what to do.");
+            } else {
+                if (intent.getAction().equals(INTENT_ACTION_CMD_FINISH)) {
+                    logD(TAGG+TAGGG+"Finishing activity...");
+                    finish();
+                }
+            }
+        }
+    }
+
+
+
+    /*============================================================================================*/
+    /* Logging Methods */
+
+    private void logV(String tagg) {
+        log(LOG_SEVERITY_V, tagg);
+    }
+    private void logD(String tagg) {
+        log(LOG_SEVERITY_D, tagg);
+    }
+    private void logI(String tagg) {
+        log(LOG_SEVERITY_I, tagg);
+    }
+    private void logW(String tagg) {
+        log(LOG_SEVERITY_W, tagg);
+    }
+    private void logE(String tagg) {
+        log(LOG_SEVERITY_E, tagg);
+    }
+    private void log(int logSeverity, String tagg) {
+        switch (logMethod) {
+            case Constants.LOG_METHOD_LOGCAT:
+                switch (logSeverity) {
+                    case LOG_SEVERITY_V:
+                        Log.v(TAG, tagg);
+                        break;
+                    case LOG_SEVERITY_D:
+                        Log.d(TAG, tagg);
+                        break;
+                    case LOG_SEVERITY_I:
+                        Log.i(TAG, tagg);
+                        break;
+                    case LOG_SEVERITY_W:
+                        Log.w(TAG, tagg);
+                        break;
+                    case LOG_SEVERITY_E:
+                        Log.e(TAG, tagg);
+                        break;
+                }
+                break;
+            case Constants.LOG_METHOD_FILELOGGER:
+                switch (logSeverity) {
+                    case LOG_SEVERITY_V:
+                        FL.v(TAG, tagg);
+                        break;
+                    case LOG_SEVERITY_D:
+                        FL.d(TAG, tagg);
+                        break;
+                    case LOG_SEVERITY_I:
+                        FL.i(TAG, tagg);
+                        break;
+                    case LOG_SEVERITY_W:
+                        FL.w(TAG, tagg);
+                        break;
+                    case LOG_SEVERITY_E:
+                        FL.e(TAG, tagg);
+                        break;
+                }
+                break;
+        }
+    }
+}

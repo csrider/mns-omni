@@ -1,0 +1,15 @@
+This is all modelled after:
+https://www.simplifiedcoding.net/android-room-database-example/
+
+This database is the persistent copy of run-time message data (active messages, etc.)
+It is what we would need to read back in upon app restart or something, in order to know the most recent saved message state.
+Message state includes things like how many times audio repeated, at what point a video file needs to resume, etc.
+
+
+MessageMessagenet                   A Room "entity", this is kind of like a record schema. Room handles multiple records for us, so it's effectively a table.
+MessageMessagenetDao                Define how to interact with the entity class. (this is our SQL and methods stuff)
+MessageMessagenetDatabase           A kind of holder (wrapper?) class that makes the Dao class available for use.
+MessageMessagenetDatabaseClient     How we layer out our singleton access and expose the entity to for our code. (this is how other packages interact with our little DB package here)
+
+
+(further notes and details in .receivedRequests.README)

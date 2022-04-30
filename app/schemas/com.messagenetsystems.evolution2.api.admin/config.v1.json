@@ -1,0 +1,373 @@
+{
+  "definitions": {},
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "http://example.com/root.json",
+  "type": "object",
+  "title": "The Root Schema",
+  "required": [
+    "config"
+  ],
+  "properties": {
+    "config": {
+      "$id": "#/properties/config",
+      "type": "object",
+      "title": "The Config Schema",
+      "properties": {
+        "device": {
+          "$id": "#/properties/config/properties/device",
+          "type": "object",
+          "title": "The Device Schema",
+          "default": null,
+          "properties": {
+            "deviceid": {
+              "$id": "#/properties/config/properties/device/properties/deviceid",
+              "type": "string",
+              "title": "The Deviceid Schema",
+              "default": "",
+              "examples": [
+                "Development Omni"
+              ],
+              "pattern": "^(.*)$"
+            },
+            "serialno": {
+              "$id": "#/properties/config/properties/device/properties/serialno",
+              "type": "string",
+              "title": "The Serialno Schema",
+              "default": "",
+              "examples": [
+                "MG13-20191126-1037CR"
+              ],
+              "readOnly": true,
+              "pattern": "^(.*)$"
+            }
+          }
+        },
+        "network": {
+          "$id": "#/properties/config/properties/network",
+          "type": "object",
+          "title": "The Network Schema",
+          "default": null,
+          "properties": {
+            "wireless": {
+              "$id": "#/properties/config/properties/network/properties/wireless",
+              "type": "object",
+              "title": "The Wireless Schema",
+              "default": null,
+              "properties": {
+                "mac": {
+                  "$id": "#/properties/config/properties/network/properties/wireless/properties/mac",
+                  "type": "string",
+                  "title": "The Mac Schema",
+                  "default": "",
+                  "examples": [
+                    "cc4b73929eae"
+                  ],
+                  "readOnly": true,
+                  "pattern": "^[a-fA-F0-9]{12}$"
+                },
+                "ssid": {
+                  "$id": "#/properties/config/properties/network/properties/wireless/properties/ssid",
+                  "type": "string",
+                  "title": "The Ssid Schema",
+                  "default": "",
+                  "examples": [
+                    "E4200"
+                  ],
+                  "pattern": "^(.*)$"
+                },
+                "security": {
+                  "$id": "#/properties/config/properties/network/properties/wireless/properties/security",
+                  "type": "string",
+                  "title": "The Security Schema",
+                  "default": "",
+                  "examples": [
+                    "WPA",
+                    "Open"
+                  ],
+                  "pattern": "^(.*)$"
+                },
+                "password": {
+                  "$id": "#/properties/config/properties/network/properties/wireless/properties/password",
+                  "type": "string",
+                  "title": "The Password Schema",
+                  "default": "",
+                  "examples": [
+                    "MyPass"
+                  ],
+                  "pattern": "^(.*)$"
+                },
+                "dhcp": {
+                  "$id": "#/properties/config/properties/network/properties/wireless/properties/dhcp",
+                  "type": "boolean",
+                  "title": "The Dhcp Schema",
+                  "default": true,
+                  "examples": [
+                    true
+                  ]
+                },
+                "ipaddress": {
+                  "$id": "#/properties/config/properties/network/properties/wireless/properties/ipaddress",
+                  "type": "string",
+                  "title": "The Ipaddress Schema",
+                  "default": "",
+                  "examples": [
+                    "192.168.1.2"
+                  ],
+                  "pattern": "^(.*)$",
+                  "format": "ipv4"
+                },
+                "netmask": {
+                  "$id": "#/properties/config/properties/network/properties/wireless/properties/netmask",
+                  "type": "string",
+                  "title": "The Netmask Schema",
+                  "default": "",
+                  "examples": [
+                    "255.255.255.0"
+                  ],
+                  "pattern": "^(.*)$",
+                  "format": "ipv4"
+                },
+                "gateway": {
+                  "$id": "#/properties/config/properties/network/properties/wireless/properties/gateway",
+                  "type": "string",
+                  "title": "The Gateway Schema",
+                  "default": "",
+                  "examples": [
+                    "192.168.1.1"
+                  ],
+                  "pattern": "^(.*)$",
+                  "format": "ipv4"
+                },
+                "dns1": {
+                  "$id": "#/properties/config/properties/network/properties/wireless/properties/dns1",
+                  "type": "string",
+                  "title": "The Dns1 Schema",
+                  "default": "",
+                  "examples": [
+                    ""
+                  ],
+                  "pattern": "^(.*)$",
+                  "format": "ipv4"
+                },
+                "dns2": {
+                  "$id": "#/properties/config/properties/network/properties/wireless/properties/dns2",
+                  "type": "string",
+                  "title": "The Dns2 Schema",
+                  "default": "",
+                  "examples": [
+                    ""
+                  ],
+                  "pattern": "^(.*)$",
+                  "format": "ipv4"
+                }
+              },
+              "required": [
+                "dhcp"
+              ]
+            },
+            "wired": {
+              "$id": "#/properties/config/properties/network/properties/wired",
+              "type": "object",
+              "title": "The Wired Schema",
+              "default": null,
+              "properties": {
+                "mac": {
+                  "$id": "#/properties/config/properties/network/properties/wired/properties/mac",
+                  "type": "string",
+                  "title": "The Mac Schema",
+                  "default": "",
+                  "examples": [
+                    "814bc8d982eb"
+                  ],
+                  "readOnly": true,
+                  "pattern": "^[a-fA-F0-9]{12}$"
+                },
+                "dhcp": {
+                  "$id": "#/properties/config/properties/network/properties/wired/properties/dhcp",
+                  "type": "boolean",
+                  "title": "The Dhcp Schema",
+                  "default": true,
+                  "examples": [
+                    true
+                  ]
+                },
+                "ipaddress": {
+                  "$id": "#/properties/config/properties/network/properties/wired/properties/ipaddress",
+                  "type": "string",
+                  "title": "The Ipaddress Schema",
+                  "default": "",
+                  "examples": [
+                    "192.168.1.3"
+                  ],
+                  "pattern": "^(.*)$",
+                  "format": "ipv4"
+                },
+                "netmask": {
+                  "$id": "#/properties/config/properties/network/properties/wired/properties/netmask",
+                  "type": "string",
+                  "title": "The Netmask Schema",
+                  "default": "",
+                  "examples": [
+                    "255.255.255.0"
+                  ],
+                  "pattern": "^(.*)$",
+                  "format": "ipv4"
+                },
+                "gateway": {
+                  "$id": "#/properties/config/properties/network/properties/wired/properties/gateway",
+                  "type": "string",
+                  "title": "The Gateway Schema",
+                  "default": "",
+                  "examples": [
+                    "192.168.1.1"
+                  ],
+                  "pattern": "^(.*)$",
+                  "format": "ipv4"
+                },
+                "dns1": {
+                  "$id": "#/properties/config/properties/network/properties/wired/properties/dns1",
+                  "type": "string",
+                  "title": "The Dns1 Schema",
+                  "default": "",
+                  "examples": [
+                    ""
+                  ],
+                  "pattern": "^(.*)$"
+                },
+                "dns2": {
+                  "$id": "#/properties/config/properties/network/properties/wired/properties/dns2",
+                  "type": "string",
+                  "title": "The Dns2 Schema",
+                  "default": "",
+                  "examples": [
+                    ""
+                  ],
+                  "pattern": "^(.*)$"
+                }
+              },
+              "required": [
+                "dhcp"
+              ]
+            }
+          }
+        },
+        "datetime": {
+          "$id": "#/properties/config/properties/datetime",
+          "type": "object",
+          "title": "The Datetime Schema",
+          "default": null,
+          "required": [
+            "usentp"
+          ],
+          "properties": {
+            "usentp": {
+              "$id": "#/properties/config/properties/datetime/properties/usentp",
+              "type": "boolean",
+              "title": "The Usentp Schema",
+              "default": false,
+              "examples": [
+                true
+              ]
+            },
+            "ntpserver1": {
+              "$id": "#/properties/config/properties/datetime/properties/ntpserver1",
+              "type": "string",
+              "title": "The Ntpserver1 Schema",
+              "default": "",
+              "examples": [
+                "time.apple.com"
+              ],
+              "pattern": "^(.*)$"
+            },
+            "utcoffset": {
+              "$id": "#/properties/config/properties/datetime/properties/utcoffset",
+              "type": "string",
+              "title": "The Utcoffset Schema",
+              "default": "",
+              "examples": [
+                "-05:00"
+              ],
+              "pattern": "^(.*)$"
+            },
+            "date": {
+              "$id": "#/properties/config/properties/datetime/properties/date",
+              "type": "object",
+              "title": "The Date Schema",
+              "default": null,
+              "properties": {
+                "year": {
+                  "$id": "#/properties/config/properties/datetime/properties/date/properties/year",
+                  "type": "string",
+                  "title": "The Year Schema",
+                  "default": "",
+                  "examples": [
+                    "2019"
+                  ],
+                  "pattern": "^[2]{1}[0-2]{1}[0-9]{1}[0-9]{1}$"
+                },
+                "month": {
+                  "$id": "#/properties/config/properties/datetime/properties/date/properties/month",
+                  "type": "string",
+                  "title": "The Month Schema",
+                  "default": "",
+                  "examples": [
+                    "11"
+                  ],
+                  "pattern": "^[0-1]{1}[0-9]{1}$"
+                },
+                "day": {
+                  "$id": "#/properties/config/properties/datetime/properties/date/properties/day",
+                  "type": "string",
+                  "title": "The Day Schema",
+                  "default": "",
+                  "examples": [
+                    "26"
+                  ],
+                  "pattern": "^[0-3]{1}[0-9]{1}$"
+                }
+              }
+            },
+            "time": {
+              "$id": "#/properties/config/properties/datetime/properties/time",
+              "type": "object",
+              "title": "The Time Schema",
+              "default": null,
+              "properties": {
+                "hour": {
+                  "$id": "#/properties/config/properties/datetime/properties/time/properties/hour",
+                  "type": "string",
+                  "title": "The Hour Schema",
+                  "default": "",
+                  "examples": [
+                    "13"
+                  ],
+                  "pattern": "^[0-2]{1}[0-9]{1}$"
+                },
+                "minute": {
+                  "$id": "#/properties/config/properties/datetime/properties/time/properties/minute",
+                  "type": "string",
+                  "title": "The Minute Schema",
+                  "default": "",
+                  "examples": [
+                    "30"
+                  ],
+                  "pattern": "^[0-5]{1}[0-9]{1}$"
+                },
+                "second": {
+                  "$id": "#/properties/config/properties/datetime/properties/time/properties/second",
+                  "type": "string",
+                  "title": "The Second Schema",
+                  "default": "",
+                  "examples": [
+                    "58"
+                  ],
+                  "pattern": "^[0-5]{1}[0-9]{1}$"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!--
+    EvolutionConfiguration>
+
+    <SIPConfig
+     SIP_server_addr="192.168.1.17"
+     SIP_port="5060"
+     id="510" volume="4" mic_volume="4" feedback_suppression="ultralow"
+     password="510"
+     registration_interval="360"
+    />
+
+    <HardwareData
+     hw_recno="2"
+     hw_deviceid="OMNI 02                       "
+     clock_format="(null)"
+    />
+
+    <NTPConfig timezone_name="America/New_York" refresh_minutes="30" >
+        <Server url="time.apple.com" />
+    </NTPConfig>
+
+    <Development password="510" />
+
+    <AudioConfig
+     volumeDefault="0"
+     volumeMicrophone="0"
+    />
+
+    <Licensing inactivationDate="12-31-9999 23:59:59" />
+
+    <GPIO_callback url="http://192.168.1.17/~silentm/bin/smgpio.cgi?" min_update_period_ms="500" />
+
+    <Microphone volume="4" audio_boost_limit="3" audio_boost_trigger_level="7" audio_boost_reaction_time="short" />
+
+    <PermanentStreams>
+
+    </PermanentStreams>
+
+    <Display minute_progress_critical_start_second="0" time_format="12" show_seconds="0" blink_colon="0" />
+
+    </EvolutionConfiguration>
+    -->
+
+    <!-- NOTE: AudioConfig should be our go-to for volume information! -->
+    <!-- NOTE: Microphone node is deprecated, but utilizes actual MNS data if you so desire -->
+
+    <!-- Server generated config file's XML node names -->
+    <string name="cfgfile_serverAddrIPv4_tagname">SIPConfig</string>
+        <string name="cfgfile_serverAddrIPv4_attributename">SIP_server_addr</string>
+        <string name="cfgfile_sipPort_attributename">SIP_port</string>
+        <string name="cfgfile_sipUsername_attributename">id</string>
+        <string name="cfgfile_sipPassword_attributename">password</string>
+        <string name="cfgfile_sipRegistrationInterval_attributename">registration_interval</string>
+
+    <string name="cfgfile_hardwareData_tagname">HardwareData</string>
+        <string name="cfgfile_hardwareRecno_attributename">hw_recno</string>
+        <string name="cfgfile_hardwareDeviceID_attributename">hw_deviceid</string>
+        <string name="cfgfile_hardwareClockFormat_attributename">clock_format</string>
+
+    <string name="cfgfile_timezone_tagname">NTPConfig</string>
+        <string name="cfgfile_timezone_attributename">timezone_name</string>
+        <string name="cfgfile_ntpURL_tagname">Server</string>
+        <string name="cfgfile_ntpURL_attributename">url</string>
+
+    <string name="cfgfile_volumeDefault_tagname">AudioConfig</string>
+        <string name="cfgfile_volumeDefault_attributename">volumeDefault</string>
+
+    <string name="cfgfile_volumeMicrophone_tagname">AudioConfig</string>
+        <string name="cfgfile_volumeMicrophone_attributename">volumeMicrophone</string>
+
+    <string name="cfgfile_licencing_tagname">Licensing</string>
+        <string name="cfgfile_inactivationDate_attributename">inactivationDate</string>
+
+</resources>

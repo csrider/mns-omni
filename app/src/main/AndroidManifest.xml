@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.messagenetsystems.evolution2">
+
+    <!-- ======================================================================================= -->
+    <!-- Declare permissions that we need -->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" /> <!-- for sockets? -->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" /> <!-- so we can control wifi settings -->
+    <uses-permission android:name="android.permission.INTERNET" /> <!-- for obvious reasons -->
+    <uses-permission android:name="android.permission.WAKE_LOCK" /> <!-- gives us control of CPU and screen states (e.g. prevent sleeping) -->
+    <uses-permission android:name="android.permission.DISABLE_KEYGUARD" /> <!-- allows us to disable the screen lock feature -->
+    <uses-permission android:name="android.permission.USE_SIP" /> <!-- for registration and telephony -->
+    <uses-permission android:name="android.permission.RECORD_AUDIO" /> <!-- for telephony -->
+    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" /> <!-- for volume, streams, etc. -->
+    <uses-permission android:name="android.permission.WRITE_SETTINGS" /> <!-- for screen brightness, etc. -->
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.BLUETOOTH" />
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+    <uses-permission android:name="android.permission.BLUETOOTH_PRIVILEGED" />
+    <uses-permission android:name="android.permission.BATTERY_STATS" />
+    <uses-permission android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" /> <!-- for triggering stuff to happen upon device boot (e.g. start our service) -->
+    <uses-permission android:name="android.permission.SET_TIME_ZONE" />
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+
+    <!-- ======================================================================================= -->
+    <!-- Declare the hardware features that we require for our app -->
+    <uses-feature
+        android:name="android.software.sip"
+        android:required="true" />
+    <uses-feature
+        android:name="android.software.sip.voip"
+        android:required="true" />
+    <uses-feature
+        android:name="android.hardware.telephony"
+        android:required="false" />
+    <uses-feature
+        android:name="android.hardware.audio.low_latency"
+        android:required="false" />
+    <uses-feature
+        android:name="android.hardware.audio.output"
+        android:required="false" />
+    <uses-feature
+        android:name="android.hardware.audio.pro"
+        android:required="false" />
+    <uses-feature
+        android:name="android.hardware.wifi"
+        android:required="true" />
+    <uses-feature
+        android:name="android.hardware.microphone"
+        android:required="true" />
+    <uses-feature
+        android:name="android.hardware.bluetooth_le"
+        android:required="true" />
+
+    <!-- ======================================================================================= -->
+    <!-- Declare and specify our app and its components -->
+    <application
+        android:name=".OmniApplication"
+        android:allowBackup="false"
+        android:icon="@mipmap/mns_logo_launcher"
+        android:label="@string/app_name_short"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme"
+        android:largeHeap="true" >
+
+        <!-- =================================================================================== -->
+        <!-- Receivers -->
+
+        <!-- Declare our broadcast receivers for BOOT_COMPLETED event (to start our app on boot) -->
+        <receiver
+            android:name=".receivers.BootReceiver"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </receiver>
+
+        <!-- Declare our broadcast receiver for our MainService stopped broadcast message -->
+        <!-- Note: This broadcast message shall be sent by the service itself when it's about to die -->
+        <receiver
+            android:name=".receivers.MainServiceStoppedReceiver"
+            android:enabled="true" />
+
+        <!-- Declare our broadcast receiver for our MainService stop-requested broadcast message -->
+        <receiver
+            android:name=".receivers.MainServiceStopRequestReceiver"
+            android:enabled="true" />
+
+        <!-- Declare our broadcast receiver for our DB clear-messages command -->
+        <receiver
+            android:name=".receivers.ClearMessagesRequestReceiver"
+            android:enabled="true" />
+
+        <!-- =================================================================================== -->
+        <!-- Activities -->
+
+        <activity
+            android:name=".activities.StartupActivity"
+            android:label="@string/product_name_with_company_launcher_label_main"
+            android:launchMode="singleTask">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".activities.PreferencesActivity"
+            android:exported="false"
+            android:label="@string/product_name_with_company_launcher_label_settings"
+            android:launchMode="singleTask">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".activities.ClockActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:label="@string/title_activity_clock"
+            android:launchMode="singleTop"
+            android:theme="@style/FullscreenTheme" />
+        <activity
+            android:name=".activities.DeliverScrollingMsgActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:hardwareAccelerated="true"
+            android:label="@string/title_activity_webviewweb"
+            android:launchMode="singleTask"
+            android:noHistory="true"
+            android:theme="@style/FullscreenTheme" />
+        <activity
+            android:name=".activities.DeliverWebpageActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:hardwareAccelerated="true"
+            android:label="@string/title_activity_scroll_msg_with_details"
+            android:launchMode="singleTask"
+            android:noHistory="true"
+            android:theme="@style/FullscreenTheme" />
+        <activity
+            android:name=".activities.InactivatedActivity" />
+
+
+        <!-- =================================================================================== -->
+        <!-- Services -->
+
+        <service
+            android:name=".services.MainService"
+            android:enabled="true"
+            android:exported="false" />
+        <service
+            android:name=".services.TextToSpeechServicer"
+            android:enabled="true"
+            android:exported="false"
+            android:persistent="true" />
+        <service
+            android:name=".services.MessageService"
+            android:enabled="true"
+            android:exported="false" />
+        <service
+            android:name=".services.DeliveryService"
+            android:enabled="true"
+            android:exported="false" />
+        <service
+            android:name=".services.IncomingCallService_AJVoIP"
+            android:enabled="true"
+            android:exported="false" />
+        <service
+            android:name=".services.HealthService"
+            android:enabled="true"
+            android:exported="false" />
+        <service
+            android:name=".services.ButtonService"
+            android:enabled="true"
+            android:exported="false" />
+        <service
+            android:name=".services.FlasherLightService"
+            android:enabled="true"
+            android:exported="false" />
+    </application>
+
+</manifest>

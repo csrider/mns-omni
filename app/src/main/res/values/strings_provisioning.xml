@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="provfile_filename">evoProvisionData.xml</string>
+
+    <string name="provfile_overwriteExistingSharedPrefsWithThese">overwriteExistingSharedPrefsWithThese</string>
+
+    <string name="provfile_pdf">provDataFile</string>
+    <string name="provfile_pdf_createdBy">createdBy</string>
+    <string name="provfile_pdf_createdWhen">createdWhen</string>
+    <string name="provfile_pdf_provStartedWhen">provStartedWhen</string>
+    <string name="provfile_pdf_provStartedWhenHuman">provStartedWhenHuman</string>
+    <string name="provfile_pdf_devStartedWhen">provThisDeviceStartedWhen</string>
+    <string name="provfile_pdf_devStartedWhenHuman">provThisDeviceStartedWhenHuman</string>
+
+    <string name="provfile_ci">customerInfo</string>
+    <string name="provfile_ci_id">id</string>
+
+    <string name="provfile_di">deviceInfo</string>
+    <string name="provfile_di_mnsSerial">mnsSerial</string>
+    <string name="provfile_di_arbitraryLabel">arbitraryLabel</string>
+
+    <string name="provfile_pi">peripheralInfo</string>
+    <string name="provfile_pi_lightControllerMacAddress">lightControllerMacAddress</string>
+
+    <string name="provfile_wifi">wifi</string>
+    <string name="provfile_wifi_use">use</string>
+    <string name="provfile_wifi_mac">mac</string>
+    <string name="provfile_wifi_macNoColon">macNoColon</string>
+    <string name="provfile_wifi_ssid">ssid</string>
+    <string name="provfile_wifi_security">security</string>
+    <string name="provfile_wifi_password">password</string>
+    <string name="provfile_wifi_method">method</string>
+    <string name="provfile_wifi_ip">ip</string>
+    <string name="provfile_wifi_subnet">subnet</string>
+    <string name="provfile_wifi_gateway">gateway</string>
+    <string name="provfile_wifi_dns1">dns1</string>
+    <string name="provfile_wifi_dns2">dns2</string>
+
+    <string name="provfile_eth">ethernet</string>
+    <string name="provfile_eth_use">use</string>
+    <string name="provfile_eth_mac">mac</string>
+    <string name="provfile_eth_macNoColon">macNoColon</string>
+    <string name="provfile_eth_method">method</string>
+    <string name="provfile_eth_ip">ip</string>
+    <string name="provfile_eth_subnet">subnet</string>
+    <string name="provfile_eth_gateway">gateway</string>
+    <string name="provfile_eth_dns1">dns1</string>
+    <string name="provfile_eth_dns2">dns2</string>
+
+    <string name="provfile_srv">server</string>
+    <string name="provfile_srv_ipv4">ipv4</string>
+    
+</resources>

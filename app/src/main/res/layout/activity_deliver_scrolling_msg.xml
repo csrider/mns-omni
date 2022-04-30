@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/fullscreen_deliver_scrolling"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white"
+    tools:context="com.messagenetsystems.evolution2.activities.DeliverScrollingMsgActivity">
+
+    <LinearLayout
+        android:id="@+id/layout_msgHeader_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/textView_msgHeader_left"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.25"
+            android:gravity="left|center_vertical"
+            android:text="MHL"
+            android:textColor="@android:color/black"
+            android:textSize="75dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/textView_msgHeading"
+            app:layout_constraintTop_toTopOf="@+id/layout_msgHeader_container" />
+
+        <TextView
+            android:id="@+id/textView_msgHeading"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.65"
+            android:gravity="center_vertical|center_horizontal"
+            android:text="MsgHeading"
+            android:textAlignment="center"
+            android:textColor="@android:color/black"
+            android:textSize="80dp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toEndOf="@+id/textView_msgHeader_left"
+            app:layout_constraintEnd_toStartOf="@+id/textView_msgHeader_right"
+            app:layout_constraintTop_toTopOf="@+id/layout_msgHeader_container" />
+
+        <TextView
+            android:id="@+id/textView_msgHeader_right"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.25"
+            android:gravity="right|center_vertical"
+            android:maxLines="1"
+            android:paddingRight="10dp"
+            android:text="MHR"
+            android:textColor="@android:color/black"
+            android:textScaleX=".9"
+            android:textSize="75dp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toEndOf="@+id/textView_msgHeading"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/layout_msgHeader_container" />
+
+    </LinearLayout>
+
+    <ScrollView
+        android:id="@+id/scrollView_forMessage"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:background="@android:color/black"
+        app:layout_constraintTop_toBottomOf="@+id/layout_msgHeader_container"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+        <TextView
+            android:id="@+id/textView_message"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:maxLines="1"
+            android:paddingBottom="10dp"
+            android:paddingTop="10dp"
+            android:text="Message goes here!"
+            android:textColor="@android:color/white"
+            android:textSize="240dp"
+            android:textStyle="normal" />
+    </ScrollView>
+
+    <TextView
+        android:id="@+id/textView_details"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@android:color/white"
+        android:padding="10dp"
+        android:text="Details all go here"
+        android:textAlignment="center"
+        android:textSize="40dp"
+        app:layout_constraintTop_toBottomOf="@+id/scrollView_forMessage"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+</android.support.constraint.ConstraintLayout>

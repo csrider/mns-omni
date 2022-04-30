@@ -1,0 +1,46 @@
+{
+  "config": {
+    "device": {
+      "deviceid": "Development Omni",
+      "serialno": "MG13-20191126-1037CR"
+    },
+    "network": {
+      "wireless": {
+        "mac": "cc4b73929eae",
+        "ssid": "E4200",
+        "security": "WPA",
+        "password": "MyPass",
+        "dhcp": true,
+        "ipaddress":"",
+        "netmask": "",
+        "gateway": "",
+        "dns1": "",
+        "dns2": ""
+      },
+      "wired": {
+        "mac": "814bc8d982eb",
+        "dhcp": true,
+        "ipaddress":"",
+        "netmask": "",
+        "gateway": "",
+        "dns1": "",
+        "dns2": ""
+      }
+    },
+    "datetime": {
+      "usentp": true,
+      "ntpserver1": "time.apple.com",
+      "utcoffset": "-05:00",
+      "date": {
+        "year": "2019",
+        "month": "11",
+        "day": "26"
+      },
+      "time": {
+        "hour": "13",
+        "minute": "30",
+        "second": "58"
+      }
+    }
+  }
+}

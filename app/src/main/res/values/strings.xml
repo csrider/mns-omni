@@ -1,0 +1,483 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!--=========================================================================================-->
+    <!-- Company & Product Information -->
+    <string name="company_name_short">MessageNet</string>
+    <string name="company_name_long">MessageNet Systems</string>
+    <string name="company_name_full">MessageNet Systems, Inc.</string>
+    <string name="company_name_very_short">MNS</string>
+    <string name="code_name">Evolution</string>                                                     <!-- This is the back-end/codename... it's also what we prefix the server config file with! -->
+    <string name="product_name">Connections Omni</string>
+    <string name="product_name_short">Omni</string>
+    <string name="app_name_short">Omni2</string>
+    <string name="product_name_with_company_launcher_label_main">Omni2</string>
+    <string name="product_name_with_company_launcher_label_settings">Omni2 - Config</string>
+    <string name="product_name_with_company_launcher_label_demo">Omni2 - Demo</string>
+    <string name="product_name_with_company_launcher_label_debug">Omni2 - Debug</string>
+    <string name="support_email">support@MessageNetSystems.com</string>
+
+    <!--=========================================================================================-->
+    <!-- Configure appearance of notification and what it says -->
+    <string name="notification_title">Omni</string>
+    <string name="notification_text_runningPID">Running as process with ID #</string>
+
+    <!--=========================================================================================-->
+    <!-- General -->
+    <string name="package_name">com.messagenetsystems.evolution2</string>
+    <string name="package_filename_release">com.messagenetsystems.evolution2.apk</string>            <!-- symbolic link name that the download-update routine knows to look for -->
+    <string name="package_filename_watchdog_release">com.messagenetsystems.evolutionwatchdog.apk</string>
+    <string name="package_web_path_location">~silentm</string>                                      <!-- server web-root directory and path to symbolic link location -->
+    <string name="please_wait">Please Wait</string>
+    <string name="scrollText_audioOnlyMessage_speakLive">Someone is speaking.</string>              <!-- text to scroll on screen whenever an audio-only spoken message is occurring -->
+    <string name="sharedprefs_filename_app">app_preferences</string>                                <!-- name of our non-Android-default sharedpreferences file, without the extension -->
+    <integer name="health_monitor_check_frequency_seconds">30</integer>                             <!-- however many seconds to run health checks -->
+    <integer name="active_msgs_check_frequency_seconds">10</integer>                                <!-- however many seconds to run health checks -->
+    <integer name="defaultBaseVolumeForNoConfig">3</integer>                                        <!-- fallback volume to use whenever there is no config available -->
+    <integer name="rtspServerPort">16200</integer>                                                  <!-- port to use for the RtspServer component -->
+    <integer name="msg_rotator_rest_period">750</integer>                                           <!-- ms wait time between work cycles for the MsgRotatorThread instance -->
+    <integer name="msg_rotator_max_trying_to_deliver_allowances">5</integer>                        <!-- max number of iterations to accept a trying-to-deliver state for a message as valid before restting flag and allowing delivery (prevents bug where message may be locked out by constant clock) -->
+    <integer name="clock_minimum_visible_time_seconds">750</integer>                                <!-- minimum amount of time (in ms) that the clock must show for without being interrupted -->
+    <string name="noplaytime_visible_seconds_default">180</string>                                  <!-- amount of time (in seconds) that an unknown mediatype shows before cycling to another msg (if no playtime duration was specified in the message) -->
+    <string name="noplaytime_visible_seconds_webpage">180</string>                                  <!-- amount of time (in seconds) that a webpage shows before cycling to another msg (if no playtime duration was specified in the message) -->
+    <bool name="rapidFireRequestDetectionEnabled">false</bool>
+    <integer name="rapidFireBannerCmdThresholdMS">25</integer>                                      <!-- upper threshold to detect errant rapid fire banner commands for ignoring -->
+    <integer name="rapidFireIgnoreUpdateSeqSec">2</integer>                                         <!-- seconds threshold at which to no longer ignore update-sequence commands from banner -->
+
+    <integer name="network_health_monitor_check_frequency_seconds">30</integer>                     <!-- however many seconds to run network health checks -->
+    <integer name="server_latency_warning">1000</integer>                                           <!-- ms latency to report a warning -->
+    <integer name="server_latency_critical">2500</integer>                                          <!-- ms latency to report a critical warning -->
+    <string name="internet_latency_test_target">8.8.8.8</string>                                    <!-- IP or URL of the internet resource to test for general internet latency -->
+    <integer name="internet_latency_warning">1000</integer>                                         <!-- ms latency to report a warning -->
+    <integer name="internet_latency_critical">2000</integer>                                        <!-- ms latency to report a critical warning -->
+
+    <integer name="battery_health_monitor_check_frequency_seconds">30</integer>                     <!-- however many seconds to run network health checks -->
+    <integer name="battery_health_long_term_minutes">5</integer>                                    <!-- define how long "long term" is considered to be -->
+    <integer name="battery_full_margin">85</integer>                                                <!-- percentage battery considered to be "full" (some tablets allow discharge at 100-99% before charging again) -->
+    <integer name="battery_reserve_powersave">80</integer>                                          <!-- percentage battery to reserve (power saving measures enact at this point) -->
+    <integer name="battery_reserve_shutdown">20</integer>                                           <!-- percentage battery to reserve (shuts down at this point) -->
+    <string name="battery_efficiency_factor">0.70</string>                                          <!-- efficiency(?) factor for calculating battery run/charge times -->
+    <integer name="battery_capacity_mah_default">5000</integer>                                     <!-- default battery capacity if all detection fails or not defined, in mAh (milli-amp-hours) / may get overridden by prefs / 5200=TeclastP10 / 10000=MGN1683 -->
+    <integer name="battery_netCurrent_target_ma">500</integer>                                      <!-- milliamps to target charging battery at -->
+
+    <integer name="screenBrightness_max">255</integer>                                              <!-- maximum screen brightness -->
+    <integer name="screenBrightness_high">200</integer>                                             <!-- high screen brightness -->
+    <integer name="screenBrightness_normal">125</integer>                                           <!-- normal screen brightness -->
+    <integer name="screenBrightness_low">50</integer>                                               <!-- low screen brightness -->
+    <integer name="screenBrightness_min">15</integer>                                               <!-- minimum screen brightness (note: too low will result in screen flicker) -->
+
+    <string name="tts_default_engine_package_name">com.google.android.tts</string>                  <!-- package name of the tts engine we want to use -->
+    <!-- Available(?) google voices...
+    Voice[Name: es-es-x-ana#female_3-local, locale: es_ES, quality: 400, latency: 200, requiresNetwork: false, features: [networkTimeoutMs, networkRetriesCount, notInstalled]],
+    Voice[Name: da-dk-x-kfm-local, locale: da_DK, quality: 400, latency: 200, requiresNetwork: false, features: [networkTimeoutMs, networkRetriesCount, notInstalled]],
+    Voice[Name: fr-BE, locale: fr_BE, quality: 100, latency: 400, requiresNetwork: true, features: [networkTimeoutMs, networkRetriesCount, notInstalled]],
+    Voice[Name: th-th-x-mol#female_3-local, locale: th_TH, quality: 400, latency: 200, requiresNetwork: false, features: [networkTimeoutMs, networkRetriesCount, notInstalled]],
+    Voice[Name: cmn-cn-x-ssa-local, locale: zh_CN, quality: 400, latency: 200, requiresNetwork: false, features: [networkTimeoutMs, networkRetriesCount, notInstalled]],
+    Voice[Name: bn-in-x-bin-local, locale: bn_IN, quality: 400, latency: 200, requiresNetwork: false, features: [networkTimeoutMs, networkRetriesCount, notInstalled]],
+    Voice[Name: fr-fr-x-vlf#male_2-local, locale: fr_FR, quality: 400, latency: 200, requiresNetwork: false, features: [networkTimeoutMs, networkRetriesCount, notInstalled]],
+    Voice[Name: es-es-x-ana#male_2-local, locale: es_ES, quality: 400, latency: 200, requiresNetwork: false, features: [networkTimeoutMs, networkRetriesCount, notInstalled]],
+    Voice[Name: pt-br-x-afs#male_1-local, locale: pt_BR, quality: 400, latency: 200, requiresNetwork: false, features: [networkTimeoutMs, networkRetriesCount, notInstalled]],
+    Voice[Name: cmn-tw-x-sxx-local, locale: zh_TW, quality: 400, latency: 200, requiresNetwork: false, features: [networkTimeoutMs, networkRetriesCount, notInstalled]],
+    Voice[Name: it-it-x-kda#female_1-local, locale: it_IT, quality: 400, latency: 200, requiresNetwork: false, features: [networkTimeoutMs, networkRetriesCount, notInstalled]],
+    Voice[Name: en-IN-language, locale: en_IN, quality: 400, latency: 200, requiresNetwork: false, features: [networkTimeoutMs, legacySetLanguageVoice, networkRetriesCount, notInstalled]],
+    Voice[Name: en-us-x-sfg#male_3-local, locale: en_US, quality: 400, latency: 200, requiresNetwork: false, features: [networkTimeoutMs, networkRetriesCount]],
+    Voice[Name: vi-VN-language, locale: vi_VN, quality: 400, latency: 200, requiresNetwork: false, features: [networkTimeoutMs, legacySetLanguageVoice, networkRetriesCount, notInstalled]],
+    Voice[Name: en-au-x-afh-network, locale: en_AU, quality: 400, latency: 200, requiresNetwork: true, features: [networkTimeoutMs, networkRetriesCount, notInstalled]],
+    Voice[Name: uk-ua-x-hfd-local, locale: uk_UA, quality: 400, latency: 200, requiresNetwork: false, features: [networkTimeoutMs, networkRetriesCount, notInstalled]],
+    Voice[Name: da-DK-language, locale: da_DK, quality: 400, latency: 200, requiresNetwork: false, features: [networkTimeoutMs, legacySetLanguageVoice, networkRetriesCount, notInstalled]],
+    Voice[Name: sw, locale: sw, quality: 100, latency: 400, requiresNetwork: true, features: [networkTimeoutMs, networkRetriesCount, notInstalled]],
+    Voice[Name: bn-BD-language, locale: bn_BD, quality: 400, latency: 200, requiresNetwork: false, features: [networkTimeoutMs, legacySetLanguageVoice, networkRetriesCount, notInstalled]],
+    Voice[Name: en-gb-x-fis#female_2-local, locale: en_GB, quality: 400, latency: 200, requiresNetwork: false, features: [networkTimeoutMs, networkRetriesCount, notInstalled]],
+    Voice[Name: pt-PT, locale: pt_PT, quality: 100, latency: 400, requiresNetwork: true, features: [networkTimeoutMs, networkRetriesCount, notInstalled]],
+    Voice[Name: cy, locale: cy, quality: 100, latency: 400, requiresNetwork: true, features: [networkTimeoutMs, networkRetriesCount, notInstalled]],
+    Voice[Name: ko-kr-x-ism#female_2-local, locale: ko_KR, quality: 400, latency: 200, requiresNetwork: false, features: [networkTimeoutMs, networkRetriesCount, notInstalled]],
+    Voice[Name: bn-IN-language, locale: bn_IN, quality: 400, latency: 200, requiresNetwork: false, features: [networkTimeoutMs, legacySetLanguageVoice, net   -->
+    <string name="tts_voice_name_default">en-us-x-sfg#male_3-local</string>
+    <string name="tts_voice_name_male">en-us-x-sfg#male_3-local</string>
+    <!--<string name="tts_voice_name_female">en-US-language</string>-->
+    <string name="tts_voice_name_female">en-us-x-sfg#female_2-local</string>
+    <string name="tts_rate">.90</string>                                                            <!-- float value for changing rate of speech (<1 is slower, >1 is faster) -->
+    <string name="tts_pitch">1.02</string>                                                          <!-- DEPRECATED float value for changing pitch of speech (<1 is lower, >1 is higher) -->
+    <string name="tts_pitch_male">1.02</string>                                                     <!-- float value for changing pitch of speech (<1 is lower, >1 is higher) -->
+    <string name="tts_pitch_female">0.98</string>                                                   <!-- float value for changing pitch of speech (<1 is lower, >1 is higher) -->
+
+    <string name="notification_channelID_activeMessagesServerCheckService">EvoActiveMsgsServerCheckNotifChannel</string>
+    <string name="notification_title_activeMessagesServerCheckService">Periodically Checking Server for Active Messages</string>
+    <string name="notification_text_activeMessagesServerCheckService">running PID #</string>
+    <integer name="activeMessagesServerCheckService_threadInterval_seconds">10</integer>
+
+    <integer name="reportNetworkInfoToServer_interval_minutes">5</integer>
+    <integer name="periodicSmmonServiceCheckThread_interval_minutes">1</integer>
+
+
+    <!--=========================================================================================-->
+    <!-- Watchdog Info -->
+
+    <!-- Note: the intent filter watchdog uses is a combination of package name and the following...
+            Listen for watchdog requests ex:    com.messagenetsystems.evolution_statusRequestID
+            Watchdog expects from us ex:        com.messagenetsystems.evolution_statusResponseID -->
+    <string name="watchdog_intentFilter_statusRequestID">statusRequestID</string>                   <!-- What watchdog sends us. Don't change value! Must match the watchdog app's strings.xml value for "evolution_intentFilter_statusRequestID" -->
+    <string name="watchdog_intentFilter_statusResponseID">statusResponseID</string>                 <!-- What watchdog listens for. Don't change value! Must match the watchdog app's strings.xml value for "evolution_intentFilter_statusResponseID" -->
+
+    <!-- Configure watchdog's expected intent extras from apps that it monitors -->
+    <string name="intentExtraKey_appName">intentExtra_appName</string>                              <!-- Value must match watchdog's strings.xml value for "intentExtraKey_appName -->
+    <string name="intentExtraKey_appStatus">intentExtra_appStatus</string>                          <!-- Value must match watchdog's strings.xml value for "intentExtraKey_appStatus -->
+
+
+    <!--=========================================================================================-->
+    <!-- Updater Info -->
+
+    <string name="intentAction_triggerOmniUpdater_getUpdatesBackground">com.messagenetsystems.triggerOmniUpdater.getUpdatesBackground</string>
+    <string name="intentAction_triggerOmniUpdater_applyUpdates">com.messagenetsystems.triggerOmniUpdater.applyUpdates</string>
+    <string name="updateFileDownloadPath">/sdcard</string>
+
+
+    <!--=========================================================================================-->
+    <!-- Device/Hardware Info -->
+
+    <!-- Audio and Volume -->
+    <string name="volume_deviceMinAllowed_percentAsFloatString">0.20</string>                       <!-- minimum percent volume to allow device to use (we don't want audio to be too quiet that user has to strain to hear) -->
+    <string name="volume_deviceMaxAllowed_base_percentAsFloatString">0.80</string>                  <!-- maximum percent volume to allow device to use (needed to allow a message to utilize gain to go above perceived device maximum) -->
+    <string name="volume_deviceMaxAllowed_gained_percentAsFloatString">1.00</string>                <!-- maximum percent volume to allow device to use (only necessary to limit <100% if amplifier or speakers are bad or something) -->
+
+    <!-- MultiGold 13" tablet -->
+    <string name="tablet_13_multigold_2018Q3_model">rk3368H_64</string>                             <!-- model reported by Android Build class -->
+    <integer name="tablet_13_multigold_2018Q3_battery_capacity">10000</integer>                     <!-- battery capacity in milli-amp-hours -->
+
+
+    <!--=========================================================================================-->
+    <!-- Bluetooth and BLE Components -->
+    <string name="bluetooth_button_name">AB Shutter3</string>                                       <!-- doesn't matter if you rename the device on the tablet, will default to the name given by the manufacturer -->
+    <integer name="bluetooth_button_start_scan_frequency_seconds">60</integer>                      <!-- however many seconds to run BluetoothLE button startScan()-->
+
+    <integer name="bluetooth_adapter_wait_after_initialization_ms">500</integer>                    <!-- milliseconds to wait after initializing the adapter, before other things may be allowed to happen -->
+    <integer name="ble_button_scan_period_minutes">10</integer>                                     <!-- number of minutes to scan for before stopping and restarting the scanning again -->
+
+    <!-- button health monitor stuff -->
+    <integer name="button_scanner_health_monitor_check_frequency_seconds">10</integer>              <!-- however many seconds to wait between running health checks -->
+    <integer name="button_scanner_time_since_last_scan_to_determine_problem_seconds">60</integer>   <!-- however many seconds since a scan result after which we say we're no longer scanning -->
+
+    <!-- blebutton001 is the black keychain style 1-key beacon/button from China 1-2Q 2018 -->
+    <string name="blebutton001_device_name">iTAG            </string>                               <!-- BLE name advertised by the button (this could be one way to scan & find them) -->
+    <string name="blebutton001_service_uuid" tools:ignore="TypographyDashes">0000ffe0-0000-1000-8000-00805f9b34fb</string>          <!-- BLE service UUID (128-bit) advertised by the button (this is an ideal way to scan for and filter -->
+    <integer name="blebutton001_advertise_interval_for_button_press_min_ms">5</integer>             <!-- the lower threshold at which below value we consider an actual button press to be -->
+    <integer name="blebutton001_advertise_interval_for_button_press_max_ms">100</integer>           <!-- the upper threshold at which below value we consider an actual button press to be -->
+    <integer name="blebutton001_advertise_interval_average">3</integer>                             <!-- how many interval time values to calculate an average for (since there is some variance) (too many will delay recognition of press) -->
+    <integer name="blebutton001_avoid_duplicate_press_detection_ms">5000</integer>                  <!-- milliseconds not to act on detected presses, so to avoid detecting repeated button presses (must be more than however long button advertises short-interval broadcasts after a press) -->
+    <integer name="blebutton001_high_interval_ms">60000</integer>                                   <!-- milliseconds between advertisements we consider to be a somewhat concerning high interval -->
+    <integer name="blebutton001_very_high_interval_ms">120000</integer>                             <!-- milliseconds between advertisements we consider to be an alarmingly high interval (some issue?) -->
+
+
+    <!--=========================================================================================-->
+    <!-- Flags and Namespaces/IDs -->
+    <string name="VideoPlayerAndroidActivity_finish">com.messagenetsystems.evolution.VideoPlayerAndroidActivity_finish</string>
+    <string name="VideoPlayerAndroidActivity_pause">com.messagenetsystems.evolution.VideoPlayerAndroidActivity_pause</string>
+    <string name="VideoPlayerAndroidActivity_play">com.messagenetsystems.evolution.VideoPlayerAndroidActivity_play</string>
+
+    <!--=========================================================================================-->
+    <!-- MessageNet System / Connections / Server-software parameters -->
+    <!-- These could change in the server platform software, and would also need updated here! -->
+    <integer name="volume_extension_minimum">1</integer>                                            <!-- the minimum volume able to be defined for an extension in the MNS GUI -->
+    <integer name="volume_extension_maximum">10</integer>                                           <!-- the maximum volume able to be defined for an extension in the MNS GUI -->
+    <integer name="volume_gain_tts_minimum">0</integer>                                             <!-- the minimum gain (for text-to-speech) value able to be defined for a message in the MNS GUI -->
+    <integer name="volume_gain_tts_maximum">6</integer>                                             <!-- the maximum gain (for text-to-speech) value able to be defined for a message in the MNS GUI -->
+    <integer name="volume_gain_recorded_minimum">0</integer>                                        <!-- the minimum gain (for recorded-audio) value able to be defined for a message in the MNS GUI -->
+    <integer name="volume_gain_recorded_maximum">6</integer>                                        <!-- the maximum gain (for recorded-audio) value able to be defined for a message in the MNS GUI -->
+    <integer name="volume_gain_multimedia_minimum">0</integer>                                      <!-- the minimum gain (for multimedia-audio) value able to be defined for a message in the MNS GUI -->
+    <integer name="volume_gain_multimedia_maximum">132</integer>                                    <!-- the maximum gain (for multimedia-audio) value able to be defined for a message in the MNS GUI -->
+
+    <string name="MM_TYPE_NONE">None</string>                                                       <!-- value of struct item in db_banne.c: multimedia_type_str -->
+    <string name="MM_TYPE_MESSAGE">Message</string>                                                 <!-- value of struct item in db_banne.c: multimedia_type_str -->
+    <string name="MM_TYPE_MESSAGEFS">Message Full Screen</string>                                   <!-- value of struct item in db_banne.c: multimedia_type_str -->
+    <string name="MM_TYPE_WEBPAGE">Web page</string>                                                <!-- value of struct item in db_banne.c: multimedia_type_str -->
+    <string name="MM_TYPE_VIDEO">Video</string>                                                     <!-- value of struct item in db_banne.c: multimedia_type_str -->
+    <string name="MM_TYPE_PICTURE">Picture</string>                                                 <!-- value of struct item in db_banne.c: multimedia_type_str -->
+    <string name="MM_TYPE_PICTURETEXT">Picture &amp; Text</string>                                      <!-- value of struct item in db_banne.c: multimedia_type_str -->
+    <string name="MM_TYPE_WEBMEDIA">Web media</string>                                              <!-- value of struct item in db_banne.c: multimedia_type_str -->
+    <string name="MM_TYPE_LCDLOCATIONMAP">LCD Location Map</string>                                 <!-- value of struct item in db_banne.c: multimedia_type_str -->
+    <string name="MM_TYPE_GEOLOCATIONMAP">GEO Location Map</string>                                 <!-- value of struct item in db_banne.c: multimedia_type_str -->
+    <string name="MM_TYPE_RTSPSTREAM">RTSP Stream</string>                                          <!-- NOTE: this is not in db_banne.c, but rather is inferred from existence of rtsp:// in webpageurl field -->
+
+    <string name="BB_CHOICE_NO">0</string>                                                          <!-- value of struct item in db_banne.h: YES_NO_CHOOSE_VALUES -->
+    <string name="BB_CHOICE_YES">1</string>                                                         <!-- value of struct item in db_banne.h: YES_NO_CHOOSE_VALUES -->
+    <string name="BB_CHOICE_NO_STR">N</string>                                                      <!-- value of struct item in db_banne.h: YES_NO_CHOOSE_VALUES -->
+    <string name="BB_CHOICE_YES_STR">Y</string>                                                     <!-- value of struct item in db_banne.h: YES_NO_CHOOSE_VALUES -->
+    <string name="BB_CHOICE_CHOOSE_STR">C</string>                                                  <!-- value of struct item in db_banne.h: YES_NO_CHOOSE_VALUES -->
+    <string name="BB_CHOICE_QUESTION_STR">O</string>                                                <!-- value of struct item in db_banne.h: YES_NO_CHOOSE_VALUES -->
+    <string name="BB_CHOICE_CHOOSE_NO_STR">D</string>                                               <!-- value of struct item in db_banne.h: YES_NO_CHOOSE_VALUES -->
+    <string name="BB_CHOICE_CHOOSE_YES_STR">E</string>                                              <!-- value of struct item in db_banne.h: YES_NO_CHOOSE_VALUES -->
+
+    <string name="PA_DELIVERY_MODE_UNAVAILABLE"> </string>                                          <!-- value of const char * array in db_banne.c: pa_delivery_mode / SOME KIND OF WEIRD ERROR? -->
+    <string name="PA_DELIVERY_MODE_NOTSELECTED">0</string>                                          <!-- value of const char * array in db_banne.c: pa_delivery_mode -->
+    <string name="PA_DELIVERY_MODE_SPEAKLIVE">1</string>                                            <!-- value of const char * array in db_banne.c: pa_delivery_mode -->
+    <string name="PA_DELIVERY_MODE_RECORDANDPLAY">2</string>                                        <!-- value of const char * array in db_banne.c: pa_delivery_mode -->
+    <string name="PA_DELIVERY_MODE_TEXTTOSPEECH">3</string>                                         <!-- value of const char * array in db_banne.c: pa_delivery_mode -->
+    <string name="PA_DELIVERY_MODE_CHOOSE">C</string>                                               <!-- value of const char * array in db_banne.c: pa_delivery_mode -->
+    <string name="PA_DELIVERY_MODE_FLOORPLAN">F</string>                                            <!-- value of const char * array in db_banne.c: pa_delivery_mode -->
+
+    <string name="PA_AUDIO_REPEAT_0">0</string>                                                     <!-- value of const char * array in db_banne.c: audio_repeat_strings_values -->
+    <string name="PA_AUDIO_REPEAT_1">1</string>                                                     <!-- value of const char * array in db_banne.c: audio_repeat_strings_values -->
+    <string name="PA_AUDIO_REPEAT_2">2</string>                                                     <!-- value of const char * array in db_banne.c: audio_repeat_strings_values -->
+    <string name="PA_AUDIO_REPEAT_3">3</string>                                                     <!-- value of const char * array in db_banne.c: audio_repeat_strings_values -->
+    <string name="PA_AUDIO_REPEAT_4">4</string>                                                     <!-- value of const char * array in db_banne.c: audio_repeat_strings_values -->
+    <string name="PA_AUDIO_REPEAT_5">5</string>                                                     <!-- value of const char * array in db_banne.c: audio_repeat_strings_values -->
+    <string name="PA_AUDIO_REPEAT_6">6</string>                                                     <!-- value of const char * array in db_banne.c: audio_repeat_strings_values -->
+    <string name="PA_AUDIO_REPEAT_7">7</string>                                                     <!-- value of const char * array in db_banne.c: audio_repeat_strings_values -->
+    <string name="PA_AUDIO_REPEAT_8">8</string>                                                     <!-- value of const char * array in db_banne.c: audio_repeat_strings_values -->
+    <string name="PA_AUDIO_REPEAT_9">9</string>                                                     <!-- value of const char * array in db_banne.c: audio_repeat_strings_values -->
+    <string name="PA_AUDIO_REPEAT_NONSTOP">N</string>                                               <!-- value of const char * array in db_banne.c: audio_repeat_strings_values -->
+
+    <string name="REPLAY_MEDIA_0">0</string>                                                        <!-- value of const char * array in db_banne.c: replay_media_strings_values -->
+    <string name="REPLAY_MEDIA_1">1</string>                                                        <!-- value of const char * array in db_banne.c: replay_media_strings_values -->
+    <string name="REPLAY_MEDIA_2">2</string>                                                        <!-- value of const char * array in db_banne.c: replay_media_strings_values -->
+    <string name="REPLAY_MEDIA_3">3</string>                                                        <!-- value of const char * array in db_banne.c: replay_media_strings_values -->
+    <string name="REPLAY_MEDIA_4">4</string>                                                        <!-- value of const char * array in db_banne.c: replay_media_strings_values -->
+    <string name="REPLAY_MEDIA_5">5</string>                                                        <!-- value of const char * array in db_banne.c: replay_media_strings_values -->
+    <string name="REPLAY_MEDIA_6">6</string>                                                        <!-- value of const char * array in db_banne.c: replay_media_strings_values -->
+    <string name="REPLAY_MEDIA_7">7</string>                                                        <!-- value of const char * array in db_banne.c: replay_media_strings_values -->
+    <string name="REPLAY_MEDIA_8">8</string>                                                        <!-- value of const char * array in db_banne.c: replay_media_strings_values -->
+    <string name="REPLAY_MEDIA_9">9</string>                                                        <!-- value of const char * array in db_banne.c: replay_media_strings_values -->
+    <string name="REPLAY_MEDIA_CHOOSE">C</string>                                                   <!-- value of const char * array in db_banne.c: replay_media_strings_values -->
+
+    <string name="BANNMSGFIELDNAME_JSON_ZXRECNO">recno_zx</string>                                  <!-- value of JSON field name as generated by support_evolution.c -->
+    <string name="BANNMSGFIELDNAME_JSON_RECDTSEC">dbb_rec_dtsec</string>                            <!-- value of JSON field name as generated by support_evolution.c -->
+    <string name="BANNMSGFIELDNAME_JSON_DURATION">dbb_duration</string>                             <!-- value of JSON field name as generated by support_evolution.c -->
+    <string name="BANNMSGFIELDNAME_JSON_MSGTYPE">msgtype</string>                                   <!-- value of JSON field name as generated by support_evolution.c -->
+    <string name="BANNMSGFIELDNAME_JSON_MSGTEXT">msgtext</string>                                   <!-- value of JSON field name as generated by support_evolution.c -->
+    <string name="BANNMSGFIELDNAME_JSON_MSGDETAILS">msgdetails</string>                             <!-- value of JSON field name as generated by support_evolution.c -->
+    <string name="BANNMSGFIELDNAME_JSON_PLAYTIMEDURATION">dbb_playtime_duration</string>            <!-- value of JSON field name as generated by support_evolution.c -->
+    <string name="BANNMSGFIELDNAME_JSON_FLASHERDURATION">dbb_flasher_duration</string>              <!-- value of JSON field name as generated by support_evolution.c -->
+    <string name="BANNMSGFIELDNAME_JSON_LIGHTSIGNAL">dbb_light_signal</string>                      <!-- value of JSON field name as generated by support_evolution.c -->
+    <string name="BANNMSGFIELDNAME_JSON_LIGHTDURATION">dbb_light_duration</string>                  <!-- value of JSON field name as generated by support_evolution.c -->
+    <string name="BANNMSGFIELDNAME_JSON_AUDIOTTSGAIN">dbb_audio_tts_gain</string>                   <!-- value of JSON field name as generated by support_evolution.c -->
+    <string name="BANNMSGFIELDNAME_JSON_FLASHNEWMESSAGE">dbb_flash_new_message</string>             <!-- value of JSON field name as generated by support_evolution.c -->
+    <string name="BANNMSGFIELDNAME_JSON_VISIBLETIME">dbb_visible_time</string>                      <!-- value of JSON field name as generated by support_evolution.c -->
+    <string name="BANNMSGFIELDNAME_JSON_VISIBLEFREQUENCY">dbb_visible_frequency</string>            <!-- value of JSON field name as generated by support_evolution.c -->
+    <string name="BANNMSGFIELDNAME_JSON_VISIBLEDURATION">dbb_visible_duration</string>              <!-- value of JSON field name as generated by support_evolution.c -->
+    <string name="BANNMSGFIELDNAME_JSON_RECORDVOICEATLAUNCHSELECTION">dbb_record_voice_at_launch_selection</string><!-- value of JSON field name as generated by support_evolution.c -->
+    <string name="BANNMSGFIELDNAME_JSON_RECORDVOICEATLAUNCH">dbb_record_voice_at_launch</string>    <!-- value of JSON field name as generated by support_evolution.c -->
+    <string name="BANNMSGFIELDNAME_JSON_AUDIORECORDEDGAIN">dbb_audio_recorded_gain</string>         <!-- value of JSON field name as generated by support_evolution.c -->
+    <string name="BANNMSGFIELDNAME_JSON_PADELIVERYMODE">dbb_pa_delivery_mode</string>               <!-- value of JSON field name as generated by support_evolution.c -->
+    <string name="BANNMSGFIELDNAME_JSON_AUDIOREPEAT">dbb_audio_repeat</string>                      <!-- value of JSON field name as generated by support_evolution.c -->
+    <string name="BANNMSGFIELDNAME_JSON_SPEED">dbb_speed</string>                                   <!-- value of JSON field name as generated by support_evolution.c -->
+    <string name="BANNMSGFIELDNAME_JSON_PRIORITY">dbb_priority</string>                             <!-- value of JSON field name as generated by support_evolution.c -->
+    <string name="BANNMSGFIELDNAME_JSON_EXPIREPRIORITY">dbb_expire_priority</string>                <!-- value of JSON field name as generated by support_evolution.c -->
+    <string name="BANNMSGFIELDNAME_JSON_PRIORITYDURATION">dbb_priority_duration</string>            <!-- value of JSON field name as generated by support_evolution.c -->
+    <string name="BANNMSGFIELDNAME_JSON_PRIORITYATLAUNCH">dbb_page_priority_at_launch</string>      <!-- value of JSON field name as generated by support_evolution.c -->
+    <string name="BANNMSGFIELDNAME_JSON_PRIORITYTOLERANCE">dbb_priority_tolerance</string>          <!-- value of JSON field name as generated by support_evolution.c -->
+    <string name="BANNMSGFIELDNAME_JSON_MULTIMEDIATYPE">multimediatype</string>                     <!-- value of JSON field name as generated by support_evolution.c -->
+    <string name="BANNMSGFIELDNAME_JSON_WEBPAGEURL">webpageurl</string>                             <!-- value of JSON field name as generated by support_evolution.c -->
+    <string name="BANNMSGFIELDNAME_JSON_AUDIOGROUPS_HW">dsi_audio_group_name</string>               <!-- value of JSON field name as generated by support_evolution.c -->
+    <string name="BANNMSGFIELDNAME_JSON_AUDIOGROUPS">dbb_audio_groups</string>                      <!-- value of JSON field name as generated by support_evolution.c -->
+    <string name="BANNMSGFIELDNAME_JSON_MMAUDIOGAIN">dbb_multimedia_audio_gain</string>             <!-- value of JSON field name as generated by support_evolution.c -->
+    <string name="BANNMSGFIELDNAME_JSON_MMREPLAYS">dbb_replay_media</string>                        <!-- value of JSON field name as generated by support_evolution.c -->
+    <string name="BANNMSGFIELDNAME_JSON_SEQNUM">signseqnum</string>                                 <!-- value of JSON field name as generated by support_evolution.c -->
+    <string name="BANNMSGFIELDNAME_JSON_LAUNCHPIN">dbb_launch_pin</string>                          <!-- value of JSON field name as generated by support_evolution.c -->
+    <string name="BANNMSGFIELDNAME_JSON_LAUNCHGENDER">dss_gender</string>                           <!-- value of JSON field name as generated by support_evolution.c -->
+
+    <string name="JSONFIELDNAME_LAUNCHDATETIME">date_launch</string>                                <!-- value of JSON field name for in-app value (may not be on server side) -->
+    <string name="JSONFIELDNAME_LAUNCHDATETIME_DEVICE">date_launch_device</string>                  <!-- value of JSON field name for in-app value (may not be on server side) -->
+    <string name="JSONFIELDNAME_EXPIREDATETIME">date_expire</string>                                <!-- value of JSON field name for in-app value (may not be on server side) -->
+    <string name="JSONFIELDNAME_EXPIREDATETIME_DEVICE">date_expire_device</string>                  <!-- value of JSON field name for in-app value (may not be on server side) -->
+    <string name="JSONFIELDNAME_AUDIOREPEATSREMAINING">audio_repeats_remaining</string>             <!-- value of JSON field name for in-app value (may not be on server side) -->
+    <string name="JSONFIELDNAME_UUIDLOCAL">uuid_local</string>                                      <!-- value of JSON field name for in-app value (may not be on server side) -->
+    <string name="JSONFIELDNAME_DELIVERYCOUNT">delivery_count</string>                              <!-- value of JSON field name for in-app value (may not be on server side) -->
+    <string name="JSONFIELDNAME_LASTDELIVEREDDATETIME">date_last_delivered</string>                 <!-- value of JSON field name for in-app value (may not be on server side) -->
+    <string name="JSONFIELDNAME_ISBEINGDELIVERED">is_being_delivered</string>                       <!-- value of JSON field name for in-app value (may not be on server side) -->
+    <string name="JSONFIELDNAME_SCROLLCOUNT">scroll_count</string>                                  <!-- value of JSON field name for in-app value (may not be on server side) -->
+    <string name="JSONFIELDNAME_VIDEOSEEKPOSITION">video_seek_position</string>                     <!-- value of JSON field name for in-app value (may not be on server side) -->
+
+    <string name="MSGVAR_POUND_RAW">#</string>                                                      <!-- symbol the MessageNet server uses to markup a message variable -->
+    <string name="MSGVAR_POUNDSIGNATURE_RAW">#signature</string>                                    <!-- message variable value for #signature (raw, not decoded) -->
+    <string name="MSGVAR_POUNDSIGNATURE_DECODEDPREPEND">|X|</string>                                <!-- decoded value for #signature beginning (before the person's name) -->
+
+    <string name="BBA_MULTIPLE"> - MULTIPLE -                 </string>                             <!-- value of bba_multiple in db_banne.c (for multiple audio groups) -->
+    <string name="BBS_MULTIPLE"> - MULTIPLE -                 </string>                             <!-- value of bbs_multiple in db_banne.c (for multiple sign groups) -->
+
+    <string name="SERVER_HTTP_RELPATH_MULTIMEDIA">~silentm/multimedia</string>                      <!-- the web server directory path of multimedia files for download -->
+    <string name="SERVER_HTTP_RELPATH_FLOORPLANS">~silentm/floor_plans</string>                     <!-- the web server directory path of map files for download -->
+    <string name="SERVER_HTTP_RELPATH_TORRENTS">~silentm/torrents</string>                          <!-- the web server directory path of torrent files for download -->
+
+    <string name="SERVER_HTTP_FILEPREFIX_SERVERTTS">paFile_serverTTS</string>                       <!-- the filename prefix of the server generated, Cepstral/TTS file -->
+    <string name="SERVER_HTTP_FILESUFFIX_SERVERTTS">wav</string>                                    <!-- the filename suffix/extension of the server generated, Cepstral/TTS file -->
+    <string name="SERVER_HTTP_FILEPREFIX_RECORDEDVOICE">paFile_recordedVoice</string>               <!-- the filename prefix of the server generated, recorded file -->
+    <string name="SERVER_HTTP_FILESUFFIX_RECORDEDVOICE">wav</string>                                <!-- the filename suffix/extension of the server generated, recorded file -->
+
+    <string name="DEMOBOX_WIFI_SSID">demobox</string>                                               <!-- the SSID of the demobox' WiFi -->
+    <string name="DEMOBOX_SERVER_IP">192.168.1.150</string>                                         <!-- the static IP of the demobox' server -->
+    <string-array name="DEMOBOX_OMNI_STATIC_IPS">                                                   <!-- defined IPs of Omni devices on the demobox system that may be available for us to grab -->
+        <item>192.168.1.32</item>
+        <item>192.168.1.43</item>
+    </string-array>
+
+    <integer name="SIGNALLIGHT_CMD_BANNER_NONE">32</integer>                                               <!-- decimal value of the banner command byte (defined in support_signal.h) -->
+    <integer name="SIGNALLIGHT_CMD_BANNER_OFF">33</integer>                                                <!-- decimal value of the banner command byte (defined in support_signal.h) -->
+    <integer name="SIGNALLIGHT_CMD_BANNER_STANDBY">35</integer>                                            <!-- decimal value of the banner command byte (defined in support_signal.h) -->
+    <integer name="SIGNALLIGHT_CMD_BANNER_BLUE_DIM">40</integer>                                           <!-- decimal value of the banner command byte (defined in support_signal.h) -->
+    <integer name="SIGNALLIGHT_CMD_BANNER_BLUE_MED">41</integer>                                           <!-- decimal value of the banner command byte (defined in support_signal.h) -->
+    <integer name="SIGNALLIGHT_CMD_BANNER_BLUE_BRI">42</integer>                                           <!-- decimal value of the banner command byte (defined in support_signal.h) -->
+    <integer name="SIGNALLIGHT_CMD_BANNER_GREEN_DIM">43</integer>                                          <!-- decimal value of the banner command byte (defined in support_signal.h) -->
+    <integer name="SIGNALLIGHT_CMD_BANNER_GREEN_MED">44</integer>                                          <!-- decimal value of the banner command byte (defined in support_signal.h) -->
+    <integer name="SIGNALLIGHT_CMD_BANNER_GREEN_BRI">45</integer>                                          <!-- decimal value of the banner command byte (defined in support_signal.h) -->
+    <integer name="SIGNALLIGHT_CMD_BANNER_ORANGE_DIM">46</integer>                                         <!-- decimal value of the banner command byte (defined in support_signal.h) -->
+    <integer name="SIGNALLIGHT_CMD_BANNER_ORANGE_MED">47</integer>                                         <!-- decimal value of the banner command byte (defined in support_signal.h) -->
+    <integer name="SIGNALLIGHT_CMD_BANNER_ORANGE_BRI">48</integer>                                         <!-- decimal value of the banner command byte (defined in support_signal.h) -->
+    <integer name="SIGNALLIGHT_CMD_BANNER_PINK_DIM">49</integer>                                           <!-- decimal value of the banner command byte (defined in support_signal.h) -->
+    <integer name="SIGNALLIGHT_CMD_BANNER_PINK_MED">50</integer>                                           <!-- decimal value of the banner command byte (defined in support_signal.h) -->
+    <integer name="SIGNALLIGHT_CMD_BANNER_PINK_BRI">51</integer>                                           <!-- decimal value of the banner command byte (defined in support_signal.h) -->
+    <integer name="SIGNALLIGHT_CMD_BANNER_PURPLE_DIM">52</integer>                                         <!-- decimal value of the banner command byte (defined in support_signal.h) -->
+    <integer name="SIGNALLIGHT_CMD_BANNER_PURPLE_MED">53</integer>                                         <!-- decimal value of the banner command byte (defined in support_signal.h) -->
+    <integer name="SIGNALLIGHT_CMD_BANNER_PURPLE_BRI">54</integer>                                         <!-- decimal value of the banner command byte (defined in support_signal.h) -->
+    <integer name="SIGNALLIGHT_CMD_BANNER_RED_DIM">55</integer>                                            <!-- decimal value of the banner command byte (defined in support_signal.h) -->
+    <integer name="SIGNALLIGHT_CMD_BANNER_RED_MED">56</integer>                                            <!-- decimal value of the banner command byte (defined in support_signal.h) -->
+    <integer name="SIGNALLIGHT_CMD_BANNER_RED_BRI">57</integer>                                            <!-- decimal value of the banner command byte (defined in support_signal.h) -->
+    <integer name="SIGNALLIGHT_CMD_BANNER_WHITECOOL_DIM">58</integer>                                      <!-- decimal value of the banner command byte (defined in support_signal.h) -->
+    <integer name="SIGNALLIGHT_CMD_BANNER_WHITECOOL_MED">59</integer>                                      <!-- decimal value of the banner command byte (defined in support_signal.h) -->
+    <integer name="SIGNALLIGHT_CMD_BANNER_WHITECOOL_BRI">63</integer>                                      <!-- decimal value of the banner command byte (defined in support_signal.h) -->
+    <integer name="SIGNALLIGHT_CMD_BANNER_WHITEPURE_DIM">64</integer>                                      <!-- decimal value of the banner command byte (defined in support_signal.h) -->
+    <integer name="SIGNALLIGHT_CMD_BANNER_WHITEPURE_MED">65</integer>                                      <!-- decimal value of the banner command byte (defined in support_signal.h) -->
+    <integer name="SIGNALLIGHT_CMD_BANNER_WHITEPURE_BRI">66</integer>                                      <!-- decimal value of the banner command byte (defined in support_signal.h) -->
+    <integer name="SIGNALLIGHT_CMD_BANNER_WHITEWARM_DIM">67</integer>                                      <!-- decimal value of the banner command byte (defined in support_signal.h) -->
+    <integer name="SIGNALLIGHT_CMD_BANNER_WHITEWARM_MED">68</integer>                                      <!-- decimal value of the banner command byte (defined in support_signal.h) -->
+    <integer name="SIGNALLIGHT_CMD_BANNER_WHITEWARM_BRI">69</integer>                                      <!-- decimal value of the banner command byte (defined in support_signal.h) -->
+    <integer name="SIGNALLIGHT_CMD_BANNER_YELLOW_DIM">70</integer>                                         <!-- decimal value of the banner command byte (defined in support_signal.h) -->
+    <integer name="SIGNALLIGHT_CMD_BANNER_YELLOW_MED">71</integer>                                         <!-- decimal value of the banner command byte (defined in support_signal.h) -->
+    <integer name="SIGNALLIGHT_CMD_BANNER_YELLOW_BRI">72</integer>                                         <!-- decimal value of the banner command byte (defined in support_signal.h) -->
+    <integer name="SIGNALLIGHT_CMD_BANNER_FADING_BLUE">85</integer>                                        <!-- decimal value of the banner command byte (defined in support_signal.h) -->
+    <integer name="SIGNALLIGHT_CMD_BANNER_FADING_GREEN">86</integer>                                       <!-- decimal value of the banner command byte (defined in support_signal.h) -->
+    <integer name="SIGNALLIGHT_CMD_BANNER_FADING_ORANGE">87</integer>                                      <!-- decimal value of the banner command byte (defined in support_signal.h) -->
+    <integer name="SIGNALLIGHT_CMD_BANNER_FADING_PINK">88</integer>                                        <!-- decimal value of the banner command byte (defined in support_signal.h) -->
+    <integer name="SIGNALLIGHT_CMD_BANNER_FADING_PURPLE">89</integer>                                      <!-- decimal value of the banner command byte (defined in support_signal.h) -->
+    <integer name="SIGNALLIGHT_CMD_BANNER_FADING_RED">90</integer>                                         <!-- decimal value of the banner command byte (defined in support_signal.h) -->
+    <integer name="SIGNALLIGHT_CMD_BANNER_FADING_WHITECOOL">91</integer>                                   <!-- decimal value of the banner command byte (defined in support_signal.h) -->
+    <integer name="SIGNALLIGHT_CMD_BANNER_FADING_WHITEPURE">92</integer>                                   <!-- decimal value of the banner command byte (defined in support_signal.h) -->
+    <integer name="SIGNALLIGHT_CMD_BANNER_FADING_WHITEWARM">93</integer>                                   <!-- decimal value of the banner command byte (defined in support_signal.h) -->
+    <integer name="SIGNALLIGHT_CMD_BANNER_FADING_YELLOW">94</integer>                                      <!-- decimal value of the banner command byte (defined in support_signal.h) -->
+    <integer name="SIGNALLIGHT_CMD_BANNER_FLASHING_BLUE">100</integer>                                     <!-- decimal value of the banner command byte (defined in support_signal.h) -->
+    <integer name="SIGNALLIGHT_CMD_BANNER_FLASHING_GREEN">101</integer>                                    <!-- decimal value of the banner command byte (defined in support_signal.h) -->
+    <integer name="SIGNALLIGHT_CMD_BANNER_FLASHING_ORANGE">102</integer>                                   <!-- decimal value of the banner command byte (defined in support_signal.h) -->
+    <integer name="SIGNALLIGHT_CMD_BANNER_FLASHING_PINK">103</integer>                                     <!-- decimal value of the banner command byte (defined in support_signal.h) -->
+    <integer name="SIGNALLIGHT_CMD_BANNER_FLASHING_PURPLE">104</integer>                                   <!-- decimal value of the banner command byte (defined in support_signal.h) -->
+    <integer name="SIGNALLIGHT_CMD_BANNER_FLASHING_RED">105</integer>                                      <!-- decimal value of the banner command byte (defined in support_signal.h) -->
+    <integer name="SIGNALLIGHT_CMD_BANNER_FLASHING_WHITECOOL">106</integer>                                <!-- decimal value of the banner command byte (defined in support_signal.h) -->
+    <integer name="SIGNALLIGHT_CMD_BANNER_FLASHING_WHITEPURE">107</integer>                                <!-- decimal value of the banner command byte (defined in support_signal.h) -->
+    <integer name="SIGNALLIGHT_CMD_BANNER_FLASHING_WHITEWARM">108</integer>                                <!-- decimal value of the banner command byte (defined in support_signal.h) -->
+    <integer name="SIGNALLIGHT_CMD_BANNER_FLASHING_YELLOW">109</integer>                                   <!-- decimal value of the banner command byte (defined in support_signal.h) -->
+
+    <string name="SIGNALLIGHT_CMD_NONE">\ </string>                                                 <!-- ASCII value of the banner command byte (defined in support_signal.h) -->
+    <string name="SIGNALLIGHT_CMD_OFF">!</string>                                                   <!-- ASCII value of the banner command byte (defined in support_signal.h) -->
+    <string name="SIGNALLIGHT_CMD_STANDBY">#</string>                                               <!-- ASCII value of the banner command byte (defined in support_signal.h) -->
+    <string name="SIGNALLIGHT_CMD_BLUE_DIM">(</string>                                              <!-- ASCII value of the banner command byte (defined in support_signal.h) -->
+    <string name="SIGNALLIGHT_CMD_BLUE_MED">)</string>                                              <!-- ASCII value of the banner command byte (defined in support_signal.h) -->
+    <string name="SIGNALLIGHT_CMD_BLUE_BRI">*</string>                                              <!-- ASCII value of the banner command byte (defined in support_signal.h) -->
+    <string name="SIGNALLIGHT_CMD_GREEN_DIM">+</string>                                             <!-- ASCII value of the banner command byte (defined in support_signal.h) -->
+    <string name="SIGNALLIGHT_CMD_GREEN_MED">,</string>                                             <!-- ASCII value of the banner command byte (defined in support_signal.h) -->
+    <string name="SIGNALLIGHT_CMD_GREEN_BRI">-</string>                                             <!-- ASCII value of the banner command byte (defined in support_signal.h) -->
+    <string name="SIGNALLIGHT_CMD_ORANGE_DIM">.</string>                                            <!-- ASCII value of the banner command byte (defined in support_signal.h) -->
+    <string name="SIGNALLIGHT_CMD_ORANGE_MED">/</string>                                            <!-- ASCII value of the banner command byte (defined in support_signal.h) -->
+    <string name="SIGNALLIGHT_CMD_ORANGE_BRI">0</string>                                            <!-- ASCII value of the banner command byte (defined in support_signal.h) -->
+    <string name="SIGNALLIGHT_CMD_PINK_DIM">1</string>                                              <!-- ASCII value of the banner command byte (defined in support_signal.h) -->
+    <string name="SIGNALLIGHT_CMD_PINK_MED">2</string>                                              <!-- ASCII value of the banner command byte (defined in support_signal.h) -->
+    <string name="SIGNALLIGHT_CMD_PINK_BRI">3</string>                                              <!-- ASCII value of the banner command byte (defined in support_signal.h) -->
+    <string name="SIGNALLIGHT_CMD_PURPLE_DIM">4</string>                                            <!-- ASCII value of the banner command byte (defined in support_signal.h) -->
+    <string name="SIGNALLIGHT_CMD_PURPLE_MED">5</string>                                            <!-- ASCII value of the banner command byte (defined in support_signal.h) -->
+    <string name="SIGNALLIGHT_CMD_PURPLE_BRI">6</string>                                            <!-- ASCII value of the banner command byte (defined in support_signal.h) -->
+    <string name="SIGNALLIGHT_CMD_RED_DIM">7</string>                                               <!-- ASCII value of the banner command byte (defined in support_signal.h) -->
+    <string name="SIGNALLIGHT_CMD_RED_MED">8</string>                                               <!-- ASCII value of the banner command byte (defined in support_signal.h) -->
+    <string name="SIGNALLIGHT_CMD_RED_BRI">9</string>                                               <!-- ASCII value of the banner command byte (defined in support_signal.h) -->
+    <string name="SIGNALLIGHT_CMD_WHITECOOL_DIM">:</string>                                         <!-- ASCII value of the banner command byte (defined in support_signal.h) -->
+    <string name="SIGNALLIGHT_CMD_WHITECOOL_MED">;</string>                                         <!-- ASCII value of the banner command byte (defined in support_signal.h) -->
+    <string name="SIGNALLIGHT_CMD_WHITECOOL_BRI">\?</string>                                        <!-- ASCII value of the banner command byte (defined in support_signal.h) -->
+    <string name="SIGNALLIGHT_CMD_WHITEPURE_DIM">\@</string>                                        <!-- ASCII value of the banner command byte (defined in support_signal.h) -->
+    <string name="SIGNALLIGHT_CMD_WHITEPURE_MED">A</string>                                         <!-- ASCII value of the banner command byte (defined in support_signal.h) -->
+    <string name="SIGNALLIGHT_CMD_WHITEPURE_BRI">B</string>                                         <!-- ASCII value of the banner command byte (defined in support_signal.h) -->
+    <string name="SIGNALLIGHT_CMD_WHITEWARM_DIM">C</string>                                         <!-- ASCII value of the banner command byte (defined in support_signal.h) -->
+    <string name="SIGNALLIGHT_CMD_WHITEWARM_MED">D</string>                                         <!-- ASCII value of the banner command byte (defined in support_signal.h) -->
+    <string name="SIGNALLIGHT_CMD_WHITEWARM_BRI">E</string>                                         <!-- ASCII value of the banner command byte (defined in support_signal.h) -->
+    <string name="SIGNALLIGHT_CMD_YELLOW_DIM">F</string>                                            <!-- ASCII value of the banner command byte (defined in support_signal.h) -->
+    <string name="SIGNALLIGHT_CMD_YELLOW_MED">G</string>                                            <!-- ASCII value of the banner command byte (defined in support_signal.h) -->
+    <string name="SIGNALLIGHT_CMD_YELLOW_BRI">H</string>                                            <!-- ASCII value of the banner command byte (defined in support_signal.h) -->
+    <string name="SIGNALLIGHT_CMD_FADING_BLUE">U</string>                                           <!-- ASCII value of the banner command byte (defined in support_signal.h) -->
+    <string name="SIGNALLIGHT_CMD_FADING_GREEN">V</string>                                          <!-- ASCII value of the banner command byte (defined in support_signal.h) -->
+    <string name="SIGNALLIGHT_CMD_FADING_ORANGE">W</string>                                         <!-- ASCII value of the banner command byte (defined in support_signal.h) -->
+    <string name="SIGNALLIGHT_CMD_FADING_PINK">X</string>                                           <!-- ASCII value of the banner command byte (defined in support_signal.h) -->
+    <string name="SIGNALLIGHT_CMD_FADING_PURPLE">Y</string>                                         <!-- ASCII value of the banner command byte (defined in support_signal.h) -->
+    <string name="SIGNALLIGHT_CMD_FADING_RED">Z</string>                                            <!-- ASCII value of the banner command byte (defined in support_signal.h) -->
+    <string name="SIGNALLIGHT_CMD_FADING_WHITECOOL">[</string>                                      <!-- ASCII value of the banner command byte (defined in support_signal.h) -->
+    <string name="SIGNALLIGHT_CMD_FADING_WHITEPURE">\\</string>                                      <!-- ASCII value of the banner command byte (defined in support_signal.h) -->
+    <string name="SIGNALLIGHT_CMD_FADING_WHITEWARM">]</string>                                      <!-- ASCII value of the banner command byte (defined in support_signal.h) -->
+    <string name="SIGNALLIGHT_CMD_FADING_YELLOW">^</string>                                         <!-- ASCII value of the banner command byte (defined in support_signal.h) -->
+    <string name="SIGNALLIGHT_CMD_FLASHING_BLUE">d</string>                                         <!-- ASCII value of the banner command byte (defined in support_signal.h) -->
+    <string name="SIGNALLIGHT_CMD_FLASHING_GREEN">e</string>                                        <!-- ASCII value of the banner command byte (defined in support_signal.h) -->
+    <string name="SIGNALLIGHT_CMD_FLASHING_ORANGE">f</string>                                       <!-- ASCII value of the banner command byte (defined in support_signal.h) -->
+    <string name="SIGNALLIGHT_CMD_FLASHING_PINK">g</string>                                         <!-- ASCII value of the banner command byte (defined in support_signal.h) -->
+    <string name="SIGNALLIGHT_CMD_FLASHING_PURPLE">h</string>                                       <!-- ASCII value of the banner command byte (defined in support_signal.h) -->
+    <string name="SIGNALLIGHT_CMD_FLASHING_RED">i</string>                                          <!-- ASCII value of the banner command byte (defined in support_signal.h) -->
+    <string name="SIGNALLIGHT_CMD_FLASHING_WHITECOOL">j</string>                                    <!-- ASCII value of the banner command byte (defined in support_signal.h) -->
+    <string name="SIGNALLIGHT_CMD_FLASHING_WHITEPURE">k</string>                                    <!-- ASCII value of the banner command byte (defined in support_signal.h) -->
+    <string name="SIGNALLIGHT_CMD_FLASHING_WHITEWARM">l</string>                                    <!-- ASCII value of the banner command byte (defined in support_signal.h) -->
+    <string name="SIGNALLIGHT_CMD_FLASHING_YELLOW">m</string>                                       <!-- ASCII value of the banner command byte (defined in support_signal.h) -->
+
+    <string name="server_web_path_base">/~silentm</string>                  <!-- TODO find usages and implement -->
+    <string name="server_web_path_ajax">/~silentm/bin/smajax.cgi</string>   <!-- TODO find usages and implement -->
+
+    <!--<string name="SMAJAX_CMD_TRIGGER_ACTIVE_MSGS">evolutionGetActiveMessagesForDevice_serverPush=1</string>-->
+    <!--<string name="SMAJAX_CMD_TRIGGER_ACTIVE_MSGS">evolutionGetActiveMessagesForDevice_serverPushTriggerUpdateDeviceStatus=1</string>-->
+    <string name="SMAJAX_CMD_TRIGGER_ACTIVE_MSGS">evolutionGetActiveMessagesForDevice_likeShowSignMsgsScreen=1</string>
+    <string name="SMAJAX_CMD_TRIGGER_ACTIVE_MSGS_COUNTS">evolutionGetActiveMessagesForDevice_countsOnly=1</string>
+    <string name="SMAJAX_CMD_TRIGGER_ACTIVE_MSGS_RECNOS">evolutionGetActiveMessagesForDevice_recnosOnly=1</string>
+    <string name="SMAJAX_CMD_GET_MESSAGE_BY_RECNO_ZX">evolutionGetMessageDataForRecnoZX=1</string>
+    <string name="SMAJAX_MESSAGES_EXIST">activeMessages</string>
+    <string name="SMAJAX_MESSAGES_NONE">No currently active messages.</string>
+    <string name="SMAJAX_CMD_NOT_FOUND">No command found</string>                                   <!-- String value that smajax responds with if it doesn't know the command we send it (look in smajax.c at the end) -->
+    <string name="SMAJAX_STOPPED_SIG11">smajax stopped due to signal (11)</string>
+    <string name="SMAJAX_SIGN_NOT_FOUND">Sign not found</string>
+    <string name="SMAJAX_WTC_CMD_WRITTEN">WTC command written</string>
+    <string name="SMAJAX_WTC_CMD_FAILED">WTC command failed to write</string>
+    <string name="SMAJAX_MESSAGE_DATA">recno_zx</string>
+    <string name="SMAJAX_DB_INIT_ERROR">Database initialization error</string>
+    <string name="SMAJAX_CURRENCY_SET_ERROR">Could not set currency</string>
+    <string name="SMAJAX_CMD_HW_NETWORK_UPDATE_CHECK">evolutionReportNetworkInfo=1</string>
+    <string name="SMAJAX_RESPONSE_HW_NETWORK_NOT_CHANGED">Hardware record network info not changed</string>
+    <string name="SMAJAX_RESPONSE_HW_NETWORK_CHANGED_SUCCEEDED">Hardware record network info updated</string>
+    <string name="SMAJAX_RESPONSE_HW_NETWORK_CHANGED_FAILED">Hardware record network info failed to update</string>
+
+    <!--=========================================================================================-->
+    <!-- Activity: activity_mainfullscreen -->
+    <string name="title_activity_fullscreen">FullscreenActivity</string>
+
+    <!--=========================================================================================-->
+    <!-- Activity: DemoFullscreenActivity -->
+    <string name="title_activity_demo_fullscreen">DemoFullscreenActivity</string>
+
+    <!--=========================================================================================-->
+    <!-- Activity: DemoMenuFullscreenActivity -->
+    <string name="title_activity_demo_menu_fullscreen">DemoMenuFullscreenActivity</string>
+
+    <!--=========================================================================================-->
+    <!-- Activity: ScrollMsgWithDetails -->
+    <string name="title_activity_scroll_msg_with_details">ScrollMsgWithDetails</string>
+
+    <!--=========================================================================================-->
+    <!-- Activity: WebviewActivity -->
+    <string name="title_activity_webview">WebviewActivity</string>
+
+    <!--=========================================================================================-->
+    <!-- Activity: WebviewWebActivity -->
+    <string name="title_activity_webviewweb">WebviewWebActivity</string>
+
+    <!--=========================================================================================-->
+    <!-- Activity: VideoConferenceActivity -->
+    <string name="title_activity_video_conference">VideoConferenceActivity</string>
+
+    <!--=========================================================================================-->
+    <!-- Activity: VideoPlayerActivity -->
+    <string name="title_activity_video_player">VideoPlayerActivity</string>
+
+    <!--=========================================================================================-->
+    <!-- Assets -->
+    <string name="asset_html_newMsgFlash">file:///android_asset/new_message_flash.html</string>
+
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
+
+
+</resources>

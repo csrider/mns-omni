@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="title_activity_startup">StartupActivity</string>
+
+    <string name="logoimage_description">Logo image</string>
+
+    <string name="statustext_space"> </string>
+    <string name="statustext_loading">Loading</string>
+    <string name="statustext_checking_perms">Checking Permissions</string>
+    <string name="statustext_get_tftp_config_file">Getting Configuration from Server</string>
+    <string name="statustext_starting_service">Starting Service</string>
+    <string name="statustext_register_sip">Registering SIP Client</string>
+    <string name="statustext_tftpFail_configGet">Server Unavailable on Network</string>
+
+    <string name="btntext_settings">View/Edit Settings</string>
+    <string name="btntext_startAnyway">Start the App</string>
+    <string name="btntext_acquireConfig">Fetch Configuration</string>
+    <string name="btntext_associateLightController">Set Light Controller</string>
+    <string name="btntext_aboutInfo">About / Info</string>
+
+</resources>

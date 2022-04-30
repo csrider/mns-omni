@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/fullscreen_clock"
+    android:background="@android:color/white">
+
+    <!-- Top-most area (left side) for status stuff -->
+    <!-- Note: this depends on the LinearLayout below to provide black bar that these are rendered over -->
+    <TextView
+        android:id="@+id/textView_omniStatus_appVersion"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:elevation="1dp"
+        android:textColor="@android:color/darker_gray"
+        android:textSize="12sp"/>
+
+    <TextView
+        android:id="@+id/textView_omniStatus_uptimeApp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toEndOf="@id/textView_omniStatus_appVersion"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginStart="20sp"
+        android:elevation="1dp"
+        android:textColor="@android:color/darker_gray"
+        android:textSize="12sp"/>
+
+    <TextView
+        android:id="@+id/textView_omniStatus_uptimeDevice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toEndOf="@id/textView_omniStatus_uptimeApp"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginStart="20sp"
+        android:elevation="1dp"
+        android:visibility="invisible"
+        android:textColor="@android:color/darker_gray"
+        android:textSize="12sp"/>
+
+    <!-- Top-most area for status stuff -->
+    <!-- (screen-left)[                 network | battery ](screen-right) -->
+    <LinearLayout
+        android:id="@+id/linearLayout_omniStatus"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/black"
+        android:gravity="end"
+        android:paddingBottom="3sp">
+
+        <TextView
+            android:id="@+id/textView_omniStatus_network"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="20sp"
+            android:elevation="0dp"
+            android:textAlignment="textEnd"
+            android:visibility="visible"
+            android:textColor="@android:color/darker_gray"
+            android:textSize="12sp"/>
+
+        <TextView
+            android:id="@+id/textView_omniStatus_power"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="20sp"
+            android:elevation="0dp"
+            android:textAlignment="textEnd"
+            android:visibility="visible"
+            android:textColor="@android:color/darker_gray"
+            android:textSize="12sp"/>
+
+        <TextView
+            android:id="@+id/textView_omniStatus_battery"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="5sp"
+            android:elevation="0dp"
+            android:visibility="visible"
+            android:textColor="@android:color/darker_gray"
+            android:textSize="12sp"/>
+
+    </LinearLayout>
+
+    <!--
+    <com.messagenetsystems.evolution.AutoResizeTextClockView
+        android:layout_width="match_parent"
+        android:layout_height="680dp"
+        android:ellipsize="none"
+        android:gravity="center"
+        android:maxLines="1"
+        android:textSize="400sp"
+        android:format12Hour="h:mm"
+        android:textStyle="bold" />
+        -->
+
+    <!-- Top area for date-->
+    <TextView
+        android:id="@+id/dateTextView"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:textColor="@android:color/black"
+        android:textStyle="normal"
+        android:textSize="110sp"
+        android:text="@string/default_unset_date"/>
+
+    <!-- Centered area for time -->
+    <TextClock
+        android:id="@+id/textClock"
+        app:layout_constraintTop_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fontFamily="sans-serif"
+        android:format12Hour="h:mm"
+        android:gravity="center"
+        android:textSize="450sp"
+        android:textStyle="bold"
+        android:textColor="@android:color/black"
+        android:text="@string/default_unset_time"
+        android:paddingTop="80dp"
+        android:singleLine="true" />
+
+    <!-- Bottom-left area for debug info -->
+    <TextView
+        android:id="@+id/debugInfoTextView"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/deviceIdTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="3sp"
+        android:textColor="#00cc00"
+        android:textSize="12sp"
+        android:minWidth="50sp" />
+
+    <!-- Far-bottom-left for device ID -->
+    <TextView
+        android:id="@+id/deviceIdTextView"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="3sp"
+        android:textColor="@android:color/darker_gray"
+        android:textSize="24sp"
+        android:minWidth="50sp" />
+
+    <!-- 3rd row (center) for status messages -->
+    <TextView
+        android:id="@+id/osaTextView"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:elevation="0dp"
+        android:textAlignment="center"
+        android:textColor="@android:color/black"
+        android:textSize="50sp"
+        android:text="@string/osa_default_text"
+        android:visibility="visible" />
+
+    <!-- Far-bottom-right area for serial number -->
+    <TextView
+        android:id="@+id/serialNoTextView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="3sp"
+        android:textColor="@android:color/darker_gray"
+        android:textSize="15sp"
+        android:minWidth="50sp" />
+
+</android.support.constraint.ConstraintLayout>

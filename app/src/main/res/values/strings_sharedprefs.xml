@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Shared-preferences key names -->
+    <string name="spKeyName_tftpConfigFilename">tftpConfigFilename</string>
+    <string name="spKeyName_applianceMacAddressWifi">applianceMacAddressWifi</string>
+    <string name="spKeyName_applianceMacAddressWired">applianceMacAddressWired</string>
+    <string name="spKeyName_applianceMacAddressActive">applianceMacAddressActive</string>
+    <string name="spKeyName_serverAddrIPv4">serverIPv4</string>
+    <string name="spKeyName_thisDeviceAddrIPv4">thisDeviceIPv4</string>
+    <string name="spKeyName_timezone">timezone_name</string>
+    <string name="spKeyName_ntpURL">ntpURL</string>
+    <string name="spKeyName_sipPort">sipPort</string>
+    <string name="spKeyName_sipUsername">sipUsername</string>
+    <string name="spKeyName_sipPassword">sipPassword</string>
+    <string name="spKeyName_sipRegistrationInterval">sipRegistrationInterval</string>
+    <string name="spKeyName_volumeDefault">volumeDefault</string>
+    <string name="spKeyName_volumeMicrophone">volumeMicrophone</string>
+    <string name="spKeyName_wifiSSID">wifiSSID</string>
+    <string name="spKeyName_wifiPassword">wifiPassword</string>
+    <string name="spKeyName_wifiSecurityType">wifiSecurityType</string>
+    <string name="spKeyName_operationMode">operationMode</string>
+    <string name="spKeyName_thisDeviceID">thisDeviceID</string>
+    <string name="spKeyName_thisDeviceRecno">thisDeviceRecno</string>
+    <string name="spKeyName_bluetoothSpeaker">bluetoothSpeaker</string>
+    <string name="spKeyName_ipAddressMethod">ipAddressMethod</string>
+    <string name="spKeyName_gatewayIPv4">gatewayIPv4</string>
+    <string name="spKeyName_dnsServer1IPv4">dnsServer1IPv4</string>
+    <string name="spKeyName_dnsServer2IPv4">dnsServer2IPv4</string>
+    <string name="spKeyName_batteryCapacity_tablet">batteryCapacityTablet</string>
+    <string name="spKeyName_initialRepeats_scrollingMsg">initialRepeatsScrolling</string>
+    <string name="spKeyName_flasherMacAddress">flasherMacAddress</string>
+    <string name="spKeyName_multicastAddrIPv4">multicastIPv4</string>
+    <string name="spKeyName_inactivationDateTime">inactivationDateTime</string>
+    <string name="spKeyName_serialNumber">serialNumber</string>
+    <string name="spKeyName_useMnsConnectionsPlatform">useMnsConnectionsPlatform</string>
+    <string name="spKeyName_ecosystemPlatformSelection">ecosystemPlatformSelection</string>
+
+    <!-- Shared-preferences summary text (may be visible in the prefs activity) -->
+    <string name="spSummary_bluetoothSpeaker">Check if using CA2862B Bluetooth speaker.</string>
+    <string name="spSummary_batteryCapacity_tablet">Capacity (in mAh) of the battery in the device that runs this app.</string>
+
+    <!-- Shared-preferences multiple choice options -->
+    <string-array name="wifiSecurityTypes">
+        <item>"WEP"</item>
+        <item>"WPA"</item>
+        <item>"Open"</item>
+    </string-array>
+
+    <string-array name="timezones">
+        <item>"Eastern"</item>
+        <item>"Central"</item>
+        <item>"Mountain"</item>
+        <item>"Pacific"</item>
+    </string-array>
+    <string-array name="timezones_alias">
+        <item>"America/New_York"</item>
+        <item>"America/Chicago"</item>
+        <item>"America/Denver"</item>
+        <item>"America/Los_Angeles"</item>
+    </string-array>
+
+    <string-array name="operationModes">
+        <item>"Production"</item>
+        <item>"Demo"</item>
+        <item>"Debug"</item>
+        <item>"Demobox"</item>
+    </string-array>
+    <string-array name="operationModes_values"> <!-- WARNING: Don't change these values without refactoring -->
+        <item>"Production"</item>
+        <item>"Demo"</item>
+        <item>"Debug"</item>
+        <item>"Demobox"</item>
+    </string-array>
+
+    <string-array name="ipAddressMethods">
+        <item>"Static"</item>
+        <item>"DHCP"</item>
+    </string-array>
+
+    <!-- WARNING: Do not change values without also changing corresponding code (do a find-in-path) -->
+    <string-array name="ecosystemPlatform">
+        <item>"MessageNet v1"</item>
+        <item>"MessageNet v2"</item>
+        <item>"Standard API"</item>
+    </string-array>
+    <string-array name="ecosystemPlatform_values">
+        <item>"PlatformMessageNetV1"</item>
+        <item>"PlatformMessageNetV2"</item>
+        <item>"PlatformStandardAPI"</item>
+    </string-array>
+
+</resources>

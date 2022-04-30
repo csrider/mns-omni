@@ -1,0 +1,11 @@
+This is all modelled after:
+https://www.simplifiedcoding.net/android-room-database-example/
+
+
+TemplateData                   A Room "entity", this is kind of like a record schema. Room handles multiple records for us, so it's effectively a table.
+TemplateDataDao                Define how to interact with the entity class. (this is our SQL and methods stuff)
+TemplateDataDatabase           A kind of holder (wrapper?) class that makes the Dao class available for use.
+TemplateDataDatabaseClient     How we layer out our singleton access and expose the entity to for our code. (this is how other packages interact with our little DB package here)
+
+
+(further notes and details in .receivedRequests.README)

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="inactivated_main_text">OFFLINE</string>
+    <string name="inactivated_secondary_text">Contact Your Support</string>
+
+</resources>

@@ -1,0 +1,17 @@
+This is all modelled after:
+https://www.simplifiedcoding.net/android-room-database-example/
+
+This database simply stores all received "message" type of requests (not configuration or other requests).
+It may be considered as raw message data (our runtime doesn't modify the message data payload or anything).
+This database is where the message UUID also gets first assigned.
+It periodically gets populated and cleaned-up by the ReceivedRequestForwarder thread.
+It periodically gets read from by MessageGovernorThread to suck in any new messages that got forwarded to it.
+
+
+ReceivedMessage                   A Room "entity", this is kind of like a record schema. Room handles multiple records for us, so it's effectively a table.
+ReceivedMessageDao                Define how to interact with the ReceivedMessage entity.
+ReceivedMessageDatabase           A kind of holder (wrapper?) class that makes ReceivedMessageDao available for use.
+ReceivedMessageDatabaseClient     How we layer out our singleton access and expose the entity to for our code.
+
+
+(further notes and details in .receivedRequests.README)

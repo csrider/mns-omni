@@ -1,0 +1,150 @@
+This is all modelled after:
+https://www.simplifiedcoding.net/android-room-database-example/
+
+This database simply stores ALL received requests.
+It periodically gets processed and cleaned up by the ReceivedRequestProcessor thread.
+
+
+ReceivedRequest                   A Room "entity", this is kind of like a record schema. Room handles multiple records for us, so it's effectively a table.
+ReceivedRequestDao                Define how to interact with the ReceivedRequest entity.
+ReceivedRequestDatabase           A kind of holder (wrapper?) class that makes ReceivedRequestDao available for use.
+ReceivedRequestDatabaseClient     How we layer out our singleton access and expose the entity to for our code.
+
+
+=== Example for adding an ReceivedRequest record to its database ===
+
+private void saveReceivedRequest() {
+    final String uuidStr = (from somewhere);
+
+    if (uuidStr.isEmpty()) {
+        //validate
+        return
+    }
+
+    class SaveReceivedRequest extends AsyncTask<Void, Void, Void> {
+        @Override
+        protected Void doInBackground(Void... voids) {
+            //creating a record
+            ReceivedRequest receivedRequest = new ReceivedRequest();      //this is what we'll insert below
+            receivedRequest.setUUID(uuidStr);
+
+            //adding to database
+            ReceivedRequestDatabaseClient.getInstance(getApplicationContext())
+                    .getReceivedRequestDatabase()
+                    .activeMsgDao()
+                    .insert(receivedRequest);     //method in DAO that does the actual save (insert)
+            return null;
+            }
+
+            @Override
+            protected void onPostExecute(Void aVoid) {
+                super.onPostExecute(aVoid);
+
+                //do something after the save is complete
+                Toast.makeText(getApplicationContext(), "Saved", Toast.LENGTH_LONG).show();
+            }
+        }
+    }
+
+    SaveReceivedRequest saveReceivedRequest = new SaveReceivedRequest();
+    saveReceivedRequest.execute();
+}
+
+
+=== Example for reading all ReceivedRequest records from database ===
+
+private void getReceivedRequests() {
+    class GetReceivedRequests extends AsyncTask<Void, Void, List<ReceivedRequest>> {
+        @Override
+        protected List<ReceivedRequest> doInBackground(Void... voids) {
+            List<ReceivedRequest> activeMsgList = ReceivedRequestDatabaseClient.getInstance(getApplicationContext())
+                    .getReceivedRequestDatabase()
+                    .activeMsgDao()
+                    .getAll();              //method in DAO to return List
+            return activeMsgList;
+        }
+
+        @Override
+        protected void onPostExecute(List<ReceivedRequest> activeMsgs) {
+            super.onPostExecute(tasks);
+
+            //do something with the activeMsgs data
+        }
+    }
+
+    GetReceivedRequests getReceivedRequests = new GetReceivedRequests();
+    getReceivedRequests.execute();
+}
+
+
+=== Example for loading an ReceivedRequest record from database ===
+
+String recReceivedRequest_uuidStr = null;
+
+private loadReceivedRequest(ReceivedRequest receivedRequest) {
+    recReceivedRequest_uuidStr = receivedRequest.getUUID();
+}
+
+
+=== Example for updating an ReceivedRequest record in database ===
+
+private void updateReceivedRequest(final ReceivedRequest receivedRequest) {
+    final String uuidStr = (from somewhere);
+
+    if (uuidStr.isEmpty()) {
+        //validate
+        return
+    }
+
+    class UpdateReceivedRequest extends AsyncTask<Void, Void, Void> {
+        @Override
+        protected Void doInBackground(Void... voids) {
+            receivedRequest.setUUID(uuidStr)
+
+            ReceivedRequestDatabaseClient.getInstance(getApplicationContext())
+                    .getReceivedRequestDatabase()
+                    .activeMsgDao()
+                    .update(receivedRequest);     //method in DAO that does the actual save (update)
+            return null;
+            }
+
+            @Override
+            protected void onPostExecute(Void aVoid) {
+                super.onPostExecute(aVoid);
+
+                //do something after the save is complete
+                Toast.makeText(getApplicationContext(), "Saved", Toast.LENGTH_LONG).show();
+            }
+        }
+    }
+
+    UpdateReceivedRequest updateReceivedRequest = new UpdateReceivedRequest();
+    updateReceivedRequest.execute();
+}
+
+
+=== Example for deleting an ReceivedRequest record in database ===
+
+private void deleteReceivedRequest(final ReceivedRequest receivedRequest) {
+    class DeleteReceivedRequest extends AsyncTask<Void, Void, Void> {
+        @Override
+        protected Void doInBackground(Void... voids) {
+            ReceivedRequestDatabaseClient.getInstance(getApplicationContext())
+                    .getReceivedRequestDatabase()
+                    .activeMsgDao()
+                    .delete(receivedRequest);     //method in DAO that does the actual delete
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
+
+            //do something after the delete is complete
+            Toast.makeText(getApplicationContext(), "Deleted", Toast.LENGTH_LONG).show();
+        }
+    }
+
+    DeleteReceivedRequest deleteReceivedRequest = new DeleteReceivedRequest();
+    deleteReceivedRequest.execute();
+}

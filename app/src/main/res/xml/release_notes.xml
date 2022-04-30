@@ -1,0 +1,449 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ReleaseNotes>
+
+    <Release>
+        <Date>Not Released</Date>
+        <Version>2.0.0</Version>
+        <Author>Chris Rider</Author>
+        <Component type="New" author="Chris Rider">
+            <Summary>Prototyping new app.</Summary>
+            <Description>Early prototyping.</Description>
+        </Component>
+    </Release>
+
+    <Release>
+        <Date>Not Released</Date>
+        <Version>2.0.1</Version>
+        <Author>Chris Rider</Author>
+        <Component type="New" author="Chris Rider">
+            <Summary>Receipt and scrolling of basic messages.</Summary>
+            <Description>Receiving, parsing, and organizing messages for basic scrolling delivery.</Description>
+        </Component>
+    </Release>
+
+    <Release>
+        <Date>2020.02.27</Date>
+        <Version>2.1.0</Version>
+        <Author>Chris Rider</Author>
+        <Component type="New" author="Chris Rider">
+            <Summary>Very first initial test release.</Summary>
+            <Description>The very first release to Kevin for initial testing. Functionality is simply same-priority scrolling message launch and delivery order / rotation.</Description>
+        </Component>
+        <Component type="New" author="Chris Rider">
+            <Summary>Can scroll multiple same-priority messages.</Summary>
+            <Description>Multiple same-priority messages can now cycle and scroll properly.</Description>
+        </Component>
+    </Release>
+
+    <Release>
+        <Date>2020.05.05</Date>
+        <Version>2.1.1</Version>
+        <Author>Chris Rider</Author>
+        <Component type = "New" author="Chris Rider">
+            <Summary>Explicit inbox message close is now obeyed.</Summary>
+            <Description>MessageNet Connections' inbox message closure (stop message) is now obeyed and message (by recno) is removed from Omni.</Description>
+        </Component>
+        <Component type="New" author="Chris Rider">
+            <Summary>Initial text-to-speech for scrolling text messages.</Summary>
+            <Description>Message text is synthesized and spoken, male/female voice depending on sender, and audio-gain.</Description>
+        </Component>
+        <Component type="New" author="Chris Rider">
+            <Summary>SIP stack now runs in ghost mode.</Summary>
+            <Description>Initial testing of AJVoIP SIP stack. Starts with app and registers using configured SIP info, but does nothing else, yet.</Description>
+        </Component>
+        <Component type="New" author="Chris Rider">
+            <Summary>TonePlayer classes migrated from v1.</Summary>
+            <Description>Class files migrated and adapted, but not yet actually used.</Description>
+        </Component>
+        <Component type="Update" author="Chris Rider">
+            <Summary>Multiple priority active messages.</Summary>
+            <Description>Highest priority message(s) deliver exclusive of any active lower priority message(s).</Description>
+        </Component>
+        <Component type="Update" author="Chris Rider">
+            <Summary>Various utility and system classes updated.</Summary>
+            <Description>In support of continuing migration of v1 assets.</Description>
+        </Component>
+    </Release>
+
+    <Release>
+        <Date>2020.05.11</Date>
+        <Version>2.1.2</Version>
+        <Author>Chris Rider</Author>
+        <Component type="Fix" author="Chris Rider">
+            <Summary>Some message data was not being updated during deliveries.</Summary>
+            <Description>Certain message data (e.g. scroll count, TTS count, delivery datetime, etc.) was not properly saving back to the main RAM or databases.</Description>
+        </Component>
+        <Component type="Fix" author="Chris Rider">
+            <Summary>Message expiration improperly calculated.</Summary>
+            <Description>Expiration calculation was based off duration from absolute server-provided launch date. It now uses duration after first delivery on the Omni.</Description>
+        </Component>
+        <Component type="Improvement" author="Chris Rider">
+            <Summary>Clock screen was registering receivers unnecessarily between message scrolls.</Summary>
+            <Description>There is now new logic to selectively register receivers only if there are not any messages in delivery rotation (in other words, only if the clock is expected to stay on for some time.</Description>
+        </Component>
+        <Component type="Improvement" author="Chris Rider">
+            <Summary>Scrolling messages should be smoother at initial start.</Summary>
+            <Description>A few CPU intensive tasks were being performed on UI thread onAnimationStart. They are now on their own threads.</Description>
+        </Component>
+    </Release>
+
+    <Release>
+        <Date>2020.05.25</Date>
+        <Version>2.1.3</Version>
+        <Author>Chris Rider</Author>
+        <Component type="New" author="Chris Rider">
+            <Summary>Status bar</Summary>
+            <Description>Top of the clock screen now shows various Omni status indicators.</Description>
+        </Component>
+        <Component type="New" author="Chris Rider">
+            <Summary>Device and health monitoring service.</Summary>
+            <Description>Omni can now monitor various aspects of itself to more intelligently diagnose, indicate, and log any abnormalities.</Description>
+        </Component>
+        <Component type="New" author="Chris Rider">
+            <Summary>Power-aware auto display brightness.</Summary>
+            <Description>The screen display can now automatically change brightness depending on power available, charge level, etc., in an effort to prolong battery life and speed up recharging.</Description>
+        </Component>
+        <Component type="Update" author="Chris Rider">
+            <Summary>Pong status response contents.</Summary>
+            <Description>Whenever a server pings the Omni, we now respond with more status-data, and shortened JSON values.</Description>
+        </Component>
+        <Component type="Improvement" author="Chris Rider">
+            <Summary>Memory optimizations.</Summary>
+            <Description>Too many to detail here.</Description>
+        </Component>
+    </Release>
+
+    <Release>
+        <Date>2020.05.27</Date>
+        <Version>2.1.4</Version>
+        <Author>Chris Rider</Author>
+        <Component type="New" author="Chris Rider">
+            <Summary>Disk-space monitoring and remediation.</Summary>
+            <Description>HealthService can now monitor free space in storage and take steps to free it up if necessary.</Description>
+        </Component>
+        <Component type="Improvement" author="Chris Rider">
+            <Summary>Optimization of constants.</Summary>
+            <Description>Migrating numerous strings.xml values to Constants class to facilitate code maintainability and prevent unnecessary inflation delay.</Description>
+        </Component>
+    </Release>
+
+    <Release>
+        <Date>2020.06.03</Date>
+        <Version>2.1.5</Version>
+        <Author>Chris Rider</Author>
+        <Component type="New" author="Chris Rider">
+            <Summary>Flasher lights.</Summary>
+            <Description>The flasher lights now activate with messages, if defined to do so, and ensures clearing of light state if no messages exist. Requires flasher light app version 1.1.1</Description>
+        </Component>
+        <Component type="New" author="Chris Rider">
+            <Summary>Heartbeat broadcast.</Summary>
+            <Description>HealthService now hosts a thread for regularly broadcasting a heartbeat with basic data.</Description>
+        </Component>
+        <Component type="New" author="Chris Rider">
+            <Summary>Delivery information broadcast.</Summary>
+            <Description>DeliveryService.DeliveryServiceHandler's sync cases now broadcast number of currently deliverable messages.</Description>
+        </Component>
+        <Component type="Improvement" author="Chris Rider">
+            <Summary>Optimizations and portability of intents.</Summary>
+            <Description>Beginning to place intent-related strings and values into the Constants class.</Description>
+        </Component>
+    </Release>
+
+    <Release>
+        <Date>2020.06.04</Date>
+        <Version>2.1.6</Version>
+        <Author>Chris Rider</Author>
+        <Component type="New" author="Chris Rider">
+            <Summary>Flasher light package version in response.</Summary>
+            <Description>The version number of the flasher lights controller app is now reported in the pong response.</Description>
+        </Component>
+        <Component type="New" author="Chris Rider">
+            <Summary>Number of rotating messages in response.</Summary>
+            <Description>The number of currently delivering (in rotation) messages is now reported in the pong response.</Description>
+        </Component>
+        <Component type="Update" author="Chris Rider">
+            <Summary>Data updates after each response.</Summary>
+            <Description>Whenever we construct a pong response, we are now able to update certain data to be included in the next response.</Description>
+        </Component>
+        <Component type="Update" author="Chris Rider">
+            <Summary>WiFi dBm no longer reported if Ethernet connected.</Summary>
+            <Description>Whenever a wired network connection was active, we were reporting WiFi strength, which is not necessary.</Description>
+        </Component>
+        <Component type="Update" author="Chris Rider">
+            <Summary>Flasher lights app log file cleanup.</Summary>
+            <Description>When disk space is low, the flasher lights controller app's log files are now also cleaned up to free up space.</Description>
+        </Component>
+        <Component type="Fix" author="Chris Rider">
+            <Summary>Black navigation bar covered clock.</Summary>
+            <Description>The black navigation bar at the bottom of the ClockActivity screen will now go away and not persist.</Description>
+        </Component>
+    </Release>
+
+    <Release>
+        <Date>2020.06.15</Date>
+        <Version>2.2.0</Version>
+        <Author>Chris Rider</Author>
+        <Component type="New" author="Chris Rider">
+            <Summary>Number of deliverable messages broadcast.</Summary>
+            <Description>The number of currently deliverable messages (MainService.omniMessages_deliverable) is now continuously broadcast for other apps to use.</Description>
+        </Component>
+        <Component type="Update" author="Chris Rider">
+            <Summary>Latest flasher light update support.</Summary>
+            <Description>Requires flasher light app version 2.0.0 at least.</Description>
+        </Component>
+    </Release>
+
+    <Release>
+        <Date>2020.06.16</Date>
+        <Version>2.2.1</Version>
+        <Author>Chris Rider</Author>
+        <Component type="Update" author="Chris Rider">
+            <Summary>Message UUID included flasher light broadcast.</Summary>
+            <Description>The unique UUID of message is now broadcast along with flasher light command request. Requires flasher light app version 2.0.1 to utilize it.</Description>
+        </Component>
+    </Release>
+
+    <Release>
+        <Date>2020.06.17</Date>
+        <Version>2.2.2</Version>
+        <Author>Chris Rider</Author>
+        <Component type="New" author="Chris Rider">
+            <Summary>Automatic permission granting.</Summary>
+            <Description>On app startup, OmniApplication can now automatically grant permissions in the background.</Description>
+        </Component>
+        <Component type="New" author="Chris Rider">
+            <Summary>Clear all messages from notification item.</Summary>
+            <Description>The app's notification item now provides the ability to clear and take down all messages. Useful for clearing out stuck messages.</Description>
+        </Component>
+    </Release>
+
+    <Release>
+        <Date>2020.06.21</Date>
+        <Version>2.2.3</Version>
+        <Author>Chris Rider</Author>
+        <Component type="Improvement" author="Chris Rider">
+            <Summary>Flasher light improvements.</Summary>
+            <Description>Misc.</Description>
+        </Component>
+    </Release>
+
+    <Release>
+        <Date>2020.06.28</Date>
+        <Version>2.3.0</Version>
+        <Author>Chris Rider</Author>
+        <Component type="New" author="Chris Rider">
+            <Summary>Tracking time flasher lights are active per message.</Summary>
+            <Description>Each OmniMessage can now accrue and save approximated flasher light duration each time it's delivered.</Description>
+        </Component>
+        <Component type="Improvement" author="Chris Rider">
+            <Summary>Flasher light improvements.</Summary>
+            <Description>Ability to proactively initiate next light after delay (not sure if better). For now, not using. Tweaked timings to help ensure no GATT issues. Works best with light app v2.2.0</Description>
+        </Component>
+        <Component type="Update" author="Chris Rider">
+            <Summary>Intent-related constants refactoring.</Summary>
+            <Description>Constants class file's intent related strings refactored to make more sense for code maintainability (requires flasher-light app v2.3.0).</Description>
+        </Component>
+    </Release>
+
+    <Release>
+        <Date>2020.06.29</Date>
+        <Version>2.3.1</Version>
+        <Author>Chris Rider</Author>
+        <Component type="Fix" author="Chris Rider">
+            <Summary>Preventing idential message duplication.</Summary>
+            <Description>In some cases, if server sends the same message multiple times, we duplicated the received_message database record. Now we check the whole raw JSON and avoid adding if it already exists.</Description>
+        </Component>
+    </Release>
+
+    <Release>
+        <Date>2020.07.06</Date>
+        <Version>2.3.2</Version>
+        <Author>Chris Rider</Author>
+        <Component type="Update" author="Chris Rider">
+            <Summary>No longer doing light standby between messages.</Summary>
+            <Description>In some cases, the numerous light command transactions were making communication issues more apparent.</Description>
+        </Component>
+    </Release>
+
+    <Release>
+        <Date>2020.07.09</Date>
+        <Version>2.4.0</Version>
+        <Author>Chris Rider</Author>
+        <Component type="New" author="Chris Rider">
+            <Summary>Buttons now detect presses and send data to server.</Summary>
+            <Description>The original one-key buttons now register button presses and send their data to the server, exactly as v1 did.</Description>
+        </Component>
+    </Release>
+
+    <Release>
+        <Date>2020.07.09</Date>
+        <Version>2.4.1</Version>
+        <Author>Chris Rider</Author>
+        <Component type="New" author="Chris Rider">
+            <Summary>Button presses indicate status with beeps.</Summary>
+            <Description>When a button press is detected, a short beep will sound. Upon successful server receipt/response, a higher beep will sound. If some error, a lower double beep will sound.</Description>
+        </Component>
+    </Release>
+
+    <Release>
+        <Date>2020.07.10</Date>
+        <Version>2.4.2</Version>
+        <Author>Chris Rider</Author>
+        <Component type="Fix" author="Chris Rider">
+            <Summary>Uncaught error if button pressed when server is down or responds badly.</Summary>
+            <Description>For example, if server is stopped, no error beep would play to let user know press did nothing.</Description>
+        </Component>
+        <Component type="Fix" author="Chris Rider">
+            <Summary>Button press beeps ran on UI thread.</Summary>
+            <Description>Button press beeps were causing jittery scrolling, due to not running asynchronously, properly.</Description>
+        </Component>
+        <Component type="Improvement" author="Chris Rider">
+            <Summary>Button press beeps are more responsive and indicative of status.</Summary>
+            <Description>Multiple beeps are guaranteed to play, as we are now waiting for previous beeps to finish before playback.</Description>
+        </Component>
+        <Component type="Improvement" author="Chris Rider">
+            <Summary>Reduced retry interval for button press notification to server.</Summary>
+            <Description>Interval was 3 seconds, which was kind of long, so reduced to 2 seconds between retries.</Description>
+        </Component>
+    </Release>
+
+    <Release>
+        <Date>2020.07.15</Date>
+        <Version>2.4.3</Version>
+        <Author>Chris Rider</Author>
+        <Component type="New" author="Chris Rider">
+            <Summary>RC10-BLE button support.</Summary>
+            <Description>Now listening for button presses from the new 4-key button.</Description>
+        </Component>
+    </Release>
+
+    <Release>
+        <Date>2020.07.17</Date>
+        <Version>2.4.4</Version>
+        <Author>Chris Rider</Author>
+        <Component type="Fix" author="Chris Rider">
+            <Summary>RC10-BLE button fixes.</Summary>
+            <Description>Misc.</Description>
+        </Component>
+    </Release>
+
+    <Release>
+        <Date>2020.07.22</Date>
+        <Version>2.5.0</Version>
+        <Author>Chris Rider</Author>
+        <Component type="New" author="Chris Rider">
+            <Summary>Integrated flasher light driver.</Summary>
+            <Description>Flasher light app stuff has now been integrated with this app.</Description>
+        </Component>
+        <Component type="Improvement" author="Chris Rider">
+            <Summary>Improved process health monitoring.</Summary>
+            <Description>New centralized ProcessStatus classes to keep track of process health instead of decentralized static flags.</Description>
+        </Component>
+        <Component type="Update" author="Chris Rider">
+            <Summary>Code optimizations and cleanups.</Summary>
+            <Description>Socket handler now uses SharedPrefsUtils instead of ConfigData, added misc. cleanups in some classes.</Description>
+        </Component>
+    </Release>
+
+    <Release>
+        <Date>2020.08.10</Date>
+        <Version>2.6.0</Version>
+        <Author>Chris Rider</Author>
+        <Component type="Improvement" author="Chris Rider">
+            <Summary>Reworked thread priorities for smoother performance.</Summary>
+            <Description>Now setting thread priorities as appropriate for smoother performance and making more CPU cycles available for main/UI thread.</Description>
+        </Component>
+        <Component type="Fix" author="Chris Rider">
+            <Summary>Button data memory build-up over time.</Summary>
+            <Description>Button scan/advertisement data is now in self-limiting sized LinkedHashMap.</Description>
+        </Component>
+        <Component type="Update" author="Chris Rider">
+            <Summary>Code optimizations and cleanups.</Summary>
+            <Description>Focus on leaning-up and moving-out any Services' work tasks that live on main thread.</Description>
+        </Component>
+        <Component type="Update" author="Chris Rider">
+            <Summary>Text-to-speech normalization.</Summary>
+            <Description>Certain text and formatting in the message's text now gets normalized to sound more natural.</Description>
+        </Component>
+    </Release>
+
+    <Release>
+        <Date>2020.08.11</Date>
+        <Version>2.6.1</Version>
+        <Author>Chris Rider</Author>
+        <Component type="Update" author="Chris Rider">
+            <Summary>Code optimizations.</Summary>
+            <Description>Shifting initializations to instantiation, anonymous classes for faster garbage collection, reducing memory footprints, etc.</Description>
+        </Component>
+        <Component type="Update" author="Chris Rider">
+            <Summary>Threading optimizations.</Summary>
+            <Description>Fine tuning thread priorities throughout the app to try to give more cycles to main thread.</Description>
+        </Component>
+    </Release>
+
+    <Release>
+        <Date>2020.08.22</Date>
+        <Version>2.6.2</Version>
+        <Author>Chris Rider</Author>
+        <Component type="Update" author="Chris Rider">
+            <Summary>Code optimizations.</Summary>
+            <Description>Reducing memory footprints, etc. in MainService child threads and ReceivedX databases.</Description>
+        </Component>
+    </Release>
+
+    <Release>
+        <Date>2020.10.02</Date>
+        <Version>2.7.0</Version>
+        <Author>Chris Rider</Author>
+        <Component type="New" author="Chris Rider">
+            <Summary>LED flasher alternative whites.</Summary>
+            <Description>Warm and cool whites are now supported, not just pure.</Description>
+        </Component>
+        <Component type="New" author="Chris Rider">
+            <Summary>Scrolling message legacy colors.</Summary>
+            <Description>Legacy MNS colors based on "Alert Status" field are now supported.</Description>
+        </Component>
+        <Component type="Update" author="Chris Rider">
+            <Summary>MainService thread monitoring and restart.</Summary>
+            <Description>MainService now monitors its child threads (not just child-services) and restarts them as needed.</Description>
+        </Component>
+        <Component type="Fix" author="Chris Rider">
+            <Summary>Laggy screen brightness set.</Summary>
+            <Description>Made screen brightness changes asynchronous so they don't block anything.</Description>
+        </Component>
+        <Component type="Fix" author="Chris Rider">
+            <Summary>Overflow in thread loops.</Summary>
+            <Description>There was potential for unhandled overflow in Long for loop counter.</Description>
+        </Component>
+        <Component type="Fix" author="Chris Rider">
+            <Summary>Database tidy not working.</Summary>
+            <Description>ReceivedRequests DB was not properly tidying old records due to incomplete SQL.</Description>
+        </Component>
+        <Component type="" author="Chris Rider">
+            <Summary></Summary>
+            <Description></Description>
+        </Component>
+    </Release>
+
+    <Release>
+        <Date>2020.11.17</Date>
+        <Version>2.8.0</Version>
+        <Author>Chris Rider</Author>
+        <Component type="Fix" author="Chris Rider">
+            <Summary>Multiple priority delivery handler execution.</Summary>
+            <Description>The execution flow in DeliveryService' Handler was not properly exiting in certain cases. Added explicit returns to halt thread execution.</Description>
+        </Component>
+    </Release>
+
+    <Release>
+        <Date>2020.12.23</Date>
+        <Version>2.9.0</Version>
+        <Author>Chris Rider</Author>
+        <Component type="New" author="Chris Rider">
+            <Summary>Webpage delivery.</Summary>
+            <Description>Migrated basic webpage delivery capability from v1.</Description>
+        </Component>
+    </Release>
+
+</ReleaseNotes>
